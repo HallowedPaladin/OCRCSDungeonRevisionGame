@@ -1,0 +1,53 @@
+﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+
+<#
+    // Define the annotation to add
+    string timestampAnnotation = "[Timestamp]";
+
+    // Define the using statement to add
+    string usingStatementToAdd = "using System.ComponentModel.DataAnnotations;";
+
+    // Define the property line to find
+    string propertyLineToFind = "public DateTime Timestamp { get; set; }";
+
+    // Define the path to the entities folder
+    string entitiesFolder = Path.Combine(Host.TemplateFile, "..", "Entities");
+
+    // Loop through each C# file in the entities folder
+    foreach (string file in Directory.GetFiles(entitiesFolder, "*.cs"))
+    {
+        // Read the contents of the file and set the chnge flag to false
+        string fileContent = File.ReadAllText(file);
+        bool fileHasChanged = false;
+
+        // Check if the file already contains the timestamp annotation
+        if (!fileContent.Contains(timestampAnnotation))
+        {
+            // Find the line with the property
+            int propertyLineIndex = fileContent.IndexOf(propertyLineToFind);
+            if (propertyLineIndex != -1)
+            {
+                // Insert the timestamp annotation before the property line.  Use whitespace to preserve correct indentation.
+                fileContent = fileContent.Insert(propertyLineIndex, timestampAnnotation + "\n\t");
+                fileHasChanged = true;
+            }
+        }
+
+        // Add the 'using' statement if it doesn't exist
+        if (!fileContent.Contains(usingStatementToAdd))
+        {
+            // Add the using statement at the beginning of the file
+            fileContent = usingStatementToAdd + "\n" + fileContent;
+            fileHasChanged = true;
+        }
+
+        // Only write the file if we need to.
+        if (fileHasChanged)
+        {
+            // Write the modified content back to the file
+            File.WriteAllText(file, fileContent);
+        }
+    }
+#>

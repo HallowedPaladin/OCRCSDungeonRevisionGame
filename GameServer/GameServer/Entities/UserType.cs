@@ -1,4 +1,5 @@
-﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System;
 using System.Collections.Generic;
 
 namespace GameServer.Entities;
@@ -11,7 +12,8 @@ public partial class UserType
 
     public string UserTypeDesc { get; set; } = null!;
 
-    public DateTime UpdateDate { get; set; }
+    [Timestamp]
+	public DateTime Timestamp { get; set; }
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

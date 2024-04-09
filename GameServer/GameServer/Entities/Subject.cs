@@ -1,4 +1,5 @@
-﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System;
 using System.Collections.Generic;
 
 namespace GameServer.Entities;
@@ -11,11 +12,12 @@ public partial class Subject
 
     public string? SubjectDescription { get; set; }
 
-    public DateTime UpdateDate { get; set; }
+    [Timestamp]
+	public DateTime Timestamp { get; set; }
 
     public virtual ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
 
-    public virtual ICollection<Classroom> Classrooms { get; set; } = new List<Classroom>();
+    public virtual ICollection<ClassroomSubject> ClassroomSubjects { get; set; } = new List<ClassroomSubject>();
 
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
+    public virtual ICollection<SubjectTeacher> SubjectTeachers { get; set; } = new List<SubjectTeacher>();
 }

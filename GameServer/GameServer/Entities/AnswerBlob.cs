@@ -1,4 +1,5 @@
-﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System;
 using System.Collections.Generic;
 
 namespace GameServer.Entities;
@@ -9,7 +10,8 @@ public partial class AnswerBlob
 
     public byte[] AnswerBlob1 { get; set; } = null!;
 
-    public DateTime UpdateTime { get; set; }
+    [Timestamp]
+	public DateTime Timestamp { get; set; }
 
-    public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
+    public virtual ICollection<AnswersAnswerBlob> AnswersAnswerBlobs { get; set; } = new List<AnswersAnswerBlob>();
 }

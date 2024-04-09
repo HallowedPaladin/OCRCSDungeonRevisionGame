@@ -4,18 +4,22 @@ using System.Collections.Generic;
 
 namespace GameServer.Entities;
 
-public partial class UserLogon
+public partial class QuestionPackScore
 {
+    public int ScoreId { get; set; }
+
     public int UserId { get; set; }
 
-    public DateTime LastLogonDate { get; set; }
+    public int QuestionPackId { get; set; }
 
-    public int LogonAttempts { get; set; }
+    public DateTime ScoreDateTime { get; set; }
 
-    public sbyte IsLocked { get; set; }
+    public int Score { get; set; }
 
     [Timestamp]
 	public DateTime Timestamp { get; set; }
+
+    public virtual QuestionPack QuestionPack { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
 }

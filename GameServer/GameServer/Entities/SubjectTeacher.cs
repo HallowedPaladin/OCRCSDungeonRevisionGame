@@ -4,18 +4,16 @@ using System.Collections.Generic;
 
 namespace GameServer.Entities;
 
-public partial class UserLogon
+public partial class SubjectTeacher
 {
     public int UserId { get; set; }
 
-    public DateTime LastLogonDate { get; set; }
-
-    public int LogonAttempts { get; set; }
-
-    public sbyte IsLocked { get; set; }
+    public int SubjectId { get; set; }
 
     [Timestamp]
 	public DateTime Timestamp { get; set; }
+
+    public virtual Subject Subject { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;
 }

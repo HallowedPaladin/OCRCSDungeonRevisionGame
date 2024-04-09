@@ -1,4 +1,5 @@
-﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System;
 using System.Collections.Generic;
 
 namespace GameServer.Entities;
@@ -19,9 +20,16 @@ public partial class User
 
     public string? Email { get; set; }
 
-    public string? Phone { get; set; }
+    public int? PhoneCountryCode { get; set; }
 
-    public DateTime? UpdateDate { get; set; }
+    public int? PhoneNumber { get; set; }
+
+    public DateTime RegistrationDate { get; set; }
+
+    [Timestamp]
+	public DateTime Timestamp { get; set; }
+
+    public virtual ICollection<AssignmentRegistration> AssignmentRegistrations { get; set; } = new List<AssignmentRegistration>();
 
     public virtual ICollection<AssignmentScore> AssignmentScores { get; set; } = new List<AssignmentScore>();
 
@@ -31,9 +39,11 @@ public partial class User
 
     public virtual Preference? Preference { get; set; }
 
+    public virtual ICollection<QuestionPackScore> QuestionPackScores { get; set; } = new List<QuestionPackScore>();
+
+    public virtual ICollection<SubjectTeacher> SubjectTeachers { get; set; } = new List<SubjectTeacher>();
+
     public virtual UserLogon? UserLogon { get; set; }
 
     public virtual UserType UserType { get; set; } = null!;
-
-    public virtual ICollection<Subject> Subjects { get; set; } = new List<Subject>();
 }

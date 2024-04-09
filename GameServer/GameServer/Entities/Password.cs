@@ -1,4 +1,5 @@
-﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System;
 using System.Collections.Generic;
 
 namespace GameServer.Entities;
@@ -9,7 +10,8 @@ public partial class Password
 
     public string PasswordHash { get; set; } = null!;
 
-    public DateTime UpdateDate { get; set; }
+    [Timestamp]
+	public DateTime Timestamp { get; set; }
 
     public virtual User User { get; set; } = null!;
 }
