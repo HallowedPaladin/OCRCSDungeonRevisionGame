@@ -12,55 +12,55 @@ namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AnswerController : ControllerBase
+    public class UserTypeController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
 
-        public AnswerController(InsigniaDBContext context)
+        public UserTypeController(InsigniaDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Answer
+        // GET: api/UserType
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Answer>>> GetAnswers()
+        public async Task<ActionResult<IEnumerable<UserType>>> GetUserTypes()
         {
-          if (_context.Answers == null)
+          if (_context.UserTypes == null)
           {
               return NotFound();
           }
-            return await _context.Answers.ToListAsync();
+            return await _context.UserTypes.ToListAsync();
         }
 
-        // GET: api/Answer/5
+        // GET: api/UserType/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Answer>> GetAnswer(int id)
+        public async Task<ActionResult<UserType>> GetUserType(int id)
         {
-          if (_context.Answers == null)
+          if (_context.UserTypes == null)
           {
               return NotFound();
           }
-            var answer = await _context.Answers.FindAsync(id);
+            var userType = await _context.UserTypes.FindAsync(id);
 
-            if (answer == null)
+            if (userType == null)
             {
                 return NotFound();
             }
 
-            return answer;
+            return userType;
         }
 
-        // PUT: api/Answer/5
+        // PUT: api/UserType/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAnswer(int id, Answer answer)
+        public async Task<IActionResult> PutUserType(int id, UserType userType)
         {
-            if (id != answer.AnswerId)
+            if (id != userType.UserTypeId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(answer).State = EntityState.Modified;
+            _context.Entry(userType).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace GameServer.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AnswerExists(id))
+                if (!UserTypeExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace GameServer.Controllers
             return NoContent();
         }
 
-        // POST: api/Answer
+        // POST: api/UserType
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Answer>> PostAnswer(Answer answer)
+        public async Task<ActionResult<UserType>> PostUserType(UserType userType)
         {
-          if (_context.Answers == null)
+          if (_context.UserTypes == null)
           {
-              return Problem("Entity set 'InsigniaDBContext.Answers'  is null.");
+              return Problem("Entity set 'InsigniaDBContext.UserTypes'  is null.");
           }
-            _context.Answers.Add(answer);
+            _context.UserTypes.Add(userType);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAnswer", new { id = answer.AnswerId }, answer);
+            return CreatedAtAction("GetUserType", new { id = userType.UserTypeId }, userType);
         }
 
-        // DELETE: api/Answer/5
+        // DELETE: api/UserType/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAnswer(int id)
+        public async Task<IActionResult> DeleteUserType(int id)
         {
-            if (_context.Answers == null)
+            if (_context.UserTypes == null)
             {
                 return NotFound();
             }
-            var answer = await _context.Answers.FindAsync(id);
-            if (answer == null)
+            var userType = await _context.UserTypes.FindAsync(id);
+            if (userType == null)
             {
                 return NotFound();
             }
 
-            _context.Answers.Remove(answer);
+            _context.UserTypes.Remove(userType);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AnswerExists(int id)
+        private bool UserTypeExists(int id)
         {
-            return (_context.Answers?.Any(e => e.AnswerId == id)).GetValueOrDefault();
+            return (_context.UserTypes?.Any(e => e.UserTypeId == id)).GetValueOrDefault();
         }
     }
 }
