@@ -5,32 +5,33 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema InsigniaDB_Dev
+-- Schema APIServerDev
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema InsigniaDB_Dev
+-- Schema APIServerDev
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `InsigniaDB_Dev` DEFAULT CHARACTER SET utf8mb4 ;
-USE `InsigniaDB_Dev` ;
+CREATE SCHEMA IF NOT EXISTS `APIServerDev` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `APIServerDev` ;
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`AnswerBlobs`
+-- Table `APIServerDev`.`AnswerBlobs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AnswerBlobs` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`AnswerBlobs` (
   `AnswerBlobID` INT(11) NOT NULL,
   `AnswerBlob` BLOB NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`AnswerBlobID`),
   UNIQUE INDEX `AnswerBlobID_UNIQUE` (`AnswerBlobID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Answers`
+-- Table `APIServerDev`.`Answers`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Answers` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Answers` (
   `AnswerID` INT(11) NOT NULL AUTO_INCREMENT,
   `AnswerText` VARCHAR(200) NOT NULL,
   `AnswerValue` INT(11) NOT NULL,
@@ -38,13 +39,14 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Answers` (
   PRIMARY KEY (`AnswerID`),
   UNIQUE INDEX `AnswerID_UNIQUE` (`AnswerID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`AnswersAnswerBlobs`
+-- Table `APIServerDev`.`AnswersAnswerBlobs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AnswersAnswerBlobs` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`AnswersAnswerBlobs` (
   `AnswerID` INT(11) NOT NULL,
   `AnswerBlobID` INT(11) NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -52,18 +54,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AnswersAnswerBlobs` (
   INDEX `AnswersAnswerBlobs.AnswerBlobID_idx` (`AnswerBlobID` ASC) VISIBLE,
   CONSTRAINT `AnswersAnswerBlobs.AnswerBlobID`
     FOREIGN KEY (`AnswerBlobID`)
-    REFERENCES `InsigniaDB_Dev`.`AnswerBlobs` (`AnswerBlobID`),
+    REFERENCES `APIServerDev`.`AnswerBlobs` (`AnswerBlobID`),
   CONSTRAINT `AnswersAnswerBlobs.AnswerID`
     FOREIGN KEY (`AnswerID`)
-    REFERENCES `InsigniaDB_Dev`.`Answers` (`AnswerID`))
+    REFERENCES `APIServerDev`.`Answers` (`AnswerID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Subjects`
+-- Table `APIServerDev`.`Subjects`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Subjects` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Subjects` (
   `SubjectID` INT NOT NULL AUTO_INCREMENT,
   `SubjectName` VARCHAR(45) NOT NULL,
   `SubjectDescription` VARCHAR(120) NULL DEFAULT NULL,
@@ -71,13 +74,14 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Subjects` (
   PRIMARY KEY (`SubjectID`),
   UNIQUE INDEX `SubjectID_UNIQUE` (`SubjectID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Assignments`
+-- Table `APIServerDev`.`Assignments`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Assignments` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Assignments` (
   `AssignmentID` INT NOT NULL AUTO_INCREMENT,
   `SubjectID` INT NOT NULL,
   `AssignmentName` VARCHAR(45) NOT NULL,
@@ -89,15 +93,16 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Assignments` (
   INDEX `SubjectID_idx` (`SubjectID` ASC) VISIBLE,
   CONSTRAINT `Assignments.SubjectID`
     FOREIGN KEY (`SubjectID`)
-    REFERENCES `InsigniaDB_Dev`.`Subjects` (`SubjectID`))
+    REFERENCES `APIServerDev`.`Subjects` (`SubjectID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionPacks`
+-- Table `APIServerDev`.`QuestionPacks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPacks` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionPacks` (
   `QuestionPackID` INT(11) NOT NULL AUTO_INCREMENT,
   `QuestionPackName` VARCHAR(45) NOT NULL,
   `QuestionPackDescription` VARCHAR(120) NULL DEFAULT NULL,
@@ -106,13 +111,14 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPacks` (
   PRIMARY KEY (`QuestionPackID`),
   UNIQUE INDEX `QuestionPackID_UNIQUE` (`QuestionPackID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`AssignmentQuestionPacks`
+-- Table `APIServerDev`.`AssignmentQuestionPacks`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AssignmentQuestionPacks` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`AssignmentQuestionPacks` (
   `AssignmentID` INT(11) NOT NULL,
   `QuestionPackID` INT(11) NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -120,18 +126,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AssignmentQuestionPacks` (
   INDEX `AssignmentQuestionPacks.QuestionPackID_idx` (`QuestionPackID` ASC) VISIBLE,
   CONSTRAINT `AssignmentQuestionPacks.AssignmentID`
     FOREIGN KEY (`AssignmentID`)
-    REFERENCES `InsigniaDB_Dev`.`Assignments` (`AssignmentID`),
+    REFERENCES `APIServerDev`.`Assignments` (`AssignmentID`),
   CONSTRAINT `AssignmentQuestionPacks.QuestionPackID`
     FOREIGN KEY (`QuestionPackID`)
-    REFERENCES `InsigniaDB_Dev`.`QuestionPacks` (`QuestionPackID`))
+    REFERENCES `APIServerDev`.`QuestionPacks` (`QuestionPackID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`UserType`
+-- Table `APIServerDev`.`UserType`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`UserType` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`UserType` (
   `UserTypeID` INT NOT NULL AUTO_INCREMENT,
   `UserTypeName` VARCHAR(20) NOT NULL,
   `UserTypeDesc` VARCHAR(120) NOT NULL,
@@ -139,13 +146,14 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`UserType` (
   PRIMARY KEY (`UserTypeID`),
   UNIQUE INDEX `UserTypeID_UNIQUE` (`UserTypeID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Users`
+-- Table `APIServerDev`.`Users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Users` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Users` (
   `UserID` INT NOT NULL AUTO_INCREMENT,
   `UserTypeID` INT NOT NULL,
   `UserName` VARCHAR(30) NOT NULL,
@@ -159,19 +167,21 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Users` (
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`UserID`),
   UNIQUE INDEX `UserID_UNIQUE` (`UserID` ASC) VISIBLE,
+  UNIQUE INDEX `UserName_UNIQUE` (`UserName` ASC) VISIBLE,
   INDEX `UserTypeID_idx` (`UserTypeID` ASC) VISIBLE,
   INDEX `UserName_idx` (`UserName` ASC) VISIBLE,
   CONSTRAINT `Users.UserTypeID`
     FOREIGN KEY (`UserTypeID`)
-    REFERENCES `InsigniaDB_Dev`.`UserType` (`UserTypeID`))
+    REFERENCES `APIServerDev`.`UserType` (`UserTypeID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`AssignmentRegistrations`
+-- Table `APIServerDev`.`AssignmentRegistrations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AssignmentRegistrations` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`AssignmentRegistrations` (
   `AssignmentRegistrationID` INT(11) NOT NULL AUTO_INCREMENT,
   `UserID` INT(11) NOT NULL,
   `AssignmentID` INT(11) NOT NULL,
@@ -185,18 +195,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AssignmentRegistrations` (
   INDEX `AssignmentRegistrations.AssignmentID_idx` (`AssignmentID` ASC) VISIBLE,
   CONSTRAINT `AssignmentRegistrations.AssignmentID`
     FOREIGN KEY (`AssignmentID`)
-    REFERENCES `InsigniaDB_Dev`.`Assignments` (`AssignmentID`),
+    REFERENCES `APIServerDev`.`Assignments` (`AssignmentID`),
   CONSTRAINT `AssignmentRegistrations.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`AssignmentScores`
+-- Table `APIServerDev`.`AssignmentScores`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AssignmentScores` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`AssignmentScores` (
   `ScoreID` INT NOT NULL AUTO_INCREMENT,
   `UserID` INT NOT NULL,
   `AssignmentID` INT NOT NULL,
@@ -209,18 +220,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AssignmentScores` (
   INDEX `UserID_idx` (`UserID` ASC) VISIBLE,
   CONSTRAINT `AssignmentScores.AssignmentID`
     FOREIGN KEY (`AssignmentID`)
-    REFERENCES `InsigniaDB_Dev`.`Assignments` (`AssignmentID`),
+    REFERENCES `APIServerDev`.`Assignments` (`AssignmentID`),
   CONSTRAINT `AssignmentScores.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`AuditRecords`
+-- Table `APIServerDev`.`AuditRecords`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AuditRecords` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`AuditRecords` (
   `UserID` INT(11) NOT NULL,
   `ActivityTime` DATETIME NOT NULL,
   `ActivityType` VARCHAR(30) NOT NULL,
@@ -229,15 +241,16 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`AuditRecords` (
   PRIMARY KEY (`UserID`, `ActivityTime`),
   CONSTRAINT `AuditRecords.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Classrooms`
+-- Table `APIServerDev`.`Classrooms`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Classrooms` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Classrooms` (
   `ClassroomID` INT NOT NULL AUTO_INCREMENT,
   `ClassroomName` VARCHAR(45) NOT NULL,
   `ClassroomDescription` VARCHAR(120) NULL DEFAULT NULL,
@@ -245,13 +258,14 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Classrooms` (
   PRIMARY KEY (`ClassroomID`),
   UNIQUE INDEX `ClassroomID_UNIQUE` (`ClassroomID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`ClassroomSubject`
+-- Table `APIServerDev`.`ClassroomSubject`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`ClassroomSubject` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`ClassroomSubject` (
   `ClassroomID` INT(11) NOT NULL,
   `SubjectID` INT(11) NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -259,18 +273,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`ClassroomSubject` (
   INDEX `ClassroomSubject.SubjectID_idx` (`SubjectID` ASC) VISIBLE,
   CONSTRAINT `ClassroomSubject.ClassroomID`
     FOREIGN KEY (`ClassroomID`)
-    REFERENCES `InsigniaDB_Dev`.`Classrooms` (`ClassroomID`),
+    REFERENCES `APIServerDev`.`Classrooms` (`ClassroomID`),
   CONSTRAINT `ClassroomSubject.SubjectID`
     FOREIGN KEY (`SubjectID`)
-    REFERENCES `InsigniaDB_Dev`.`Subjects` (`SubjectID`))
+    REFERENCES `APIServerDev`.`Subjects` (`SubjectID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Passwords`
+-- Table `APIServerDev`.`Passwords`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Passwords` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Passwords` (
   `UserID` INT(11) NOT NULL,
   `PasswordHash` VARCHAR(100) NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -278,15 +293,16 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Passwords` (
   UNIQUE INDEX `UserID_UNIQUE` (`UserID` ASC) VISIBLE,
   CONSTRAINT `Passwords.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Preferences`
+-- Table `APIServerDev`.`Preferences`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Preferences` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Preferences` (
   `UserID` INT NOT NULL,
   `Locale` VARCHAR(15) NULL DEFAULT NULL,
   `UTCOffset` INT(11) NULL DEFAULT NULL,
@@ -296,15 +312,16 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Preferences` (
   UNIQUE INDEX `UserID_UNIQUE` (`UserID` ASC) VISIBLE,
   CONSTRAINT `Preferences.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionType`
+-- Table `APIServerDev`.`QuestionType`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionType` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionType` (
   `QuestionTypeID` INT(11) NOT NULL AUTO_INCREMENT,
   `QuestionType` VARCHAR(10) NOT NULL,
   `QuestionTypeDescription` VARCHAR(120) NULL DEFAULT NULL,
@@ -312,13 +329,14 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionType` (
   PRIMARY KEY (`QuestionTypeID`),
   UNIQUE INDEX `QuestionTypeID_UNIQUE` (`QuestionTypeID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`Questions`
+-- Table `APIServerDev`.`Questions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Questions` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`Questions` (
   `QuestionID` INT(11) NOT NULL AUTO_INCREMENT,
   `QuestionTitle` VARCHAR(45) NOT NULL,
   `QuestionText` VARCHAR(500) NOT NULL,
@@ -330,15 +348,16 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`Questions` (
   INDEX `Questions.QuestionType_idx` (`QuestionTypeID` ASC) VISIBLE,
   CONSTRAINT `Questions.QuestionTypeID`
     FOREIGN KEY (`QuestionTypeID`)
-    REFERENCES `InsigniaDB_Dev`.`QuestionType` (`QuestionTypeID`))
+    REFERENCES `APIServerDev`.`QuestionType` (`QuestionTypeID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionAnswers`
+-- Table `APIServerDev`.`QuestionAnswers`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionAnswers` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionAnswers` (
   `QuestionAnswerID` INT(11) NOT NULL AUTO_INCREMENT,
   `QuestionID` INT(11) NOT NULL,
   `AnswerID` INT(11) NOT NULL,
@@ -350,31 +369,33 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionAnswers` (
   INDEX `QuestionAnswers.AnswerID_idx` (`AnswerID` ASC) VISIBLE,
   CONSTRAINT `QuestionAnswers.AnswerID`
     FOREIGN KEY (`AnswerID`)
-    REFERENCES `InsigniaDB_Dev`.`Answers` (`AnswerID`),
+    REFERENCES `APIServerDev`.`Answers` (`AnswerID`),
   CONSTRAINT `QuestionAnswers.QuestionID`
     FOREIGN KEY (`QuestionID`)
-    REFERENCES `InsigniaDB_Dev`.`Questions` (`QuestionID`))
+    REFERENCES `APIServerDev`.`Questions` (`QuestionID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionBlobs`
+-- Table `APIServerDev`.`QuestionBlobs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionBlobs` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionBlobs` (
   `QuestionBlobID` INT(11) NOT NULL AUTO_INCREMENT,
   `QuestionBlob` BLOB NOT NULL,
   `Tmestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`QuestionBlobID`),
   UNIQUE INDEX `QuestionBlobID_UNIQUE` (`QuestionBlobID` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionPackQuestions`
+-- Table `APIServerDev`.`QuestionPackQuestions`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackQuestions` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionPackQuestions` (
   `QuestionPackID` INT(11) NOT NULL,
   `QuestionID` INT(11) NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -382,18 +403,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackQuestions` (
   INDEX `QuestionPackQuestions.QuestionID_idx` (`QuestionID` ASC) VISIBLE,
   CONSTRAINT `QuestionPackQuestions.QuestionID`
     FOREIGN KEY (`QuestionID`)
-    REFERENCES `InsigniaDB_Dev`.`Questions` (`QuestionID`),
+    REFERENCES `APIServerDev`.`Questions` (`QuestionID`),
   CONSTRAINT `QuestionPackQuestions.QuestionPackID`
     FOREIGN KEY (`QuestionPackID`)
-    REFERENCES `InsigniaDB_Dev`.`QuestionPacks` (`QuestionPackID`))
+    REFERENCES `APIServerDev`.`QuestionPacks` (`QuestionPackID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionPackRegistrations`
+-- Table `APIServerDev`.`QuestionPackRegistrations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackRegistrations` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionPackRegistrations` (
   `QuestionPackRegistrationID` INT(11) NOT NULL AUTO_INCREMENT,
   `AssignmentRegistrationID` INT(11) NOT NULL,
   `QuestionPackID` INT(11) NOT NULL,
@@ -407,18 +429,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackRegistrations` (
   INDEX `QuestionPackRegistrations.AssignmentRegistrationID_idx` (`AssignmentRegistrationID` ASC) VISIBLE,
   CONSTRAINT `QuestionPackRegistrations.AssignmentRegistrationID`
     FOREIGN KEY (`AssignmentRegistrationID`)
-    REFERENCES `InsigniaDB_Dev`.`AssignmentRegistrations` (`AssignmentRegistrationID`),
+    REFERENCES `APIServerDev`.`AssignmentRegistrations` (`AssignmentRegistrationID`),
   CONSTRAINT `QuestionPackRegistrations.QuestionPackID`
     FOREIGN KEY (`QuestionPackID`)
-    REFERENCES `InsigniaDB_Dev`.`QuestionPacks` (`QuestionPackID`))
+    REFERENCES `APIServerDev`.`QuestionPacks` (`QuestionPackID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionPackResponses`
+-- Table `APIServerDev`.`QuestionPackResponses`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackResponses` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionPackResponses` (
   `QuestionPackRegistrationID` VARCHAR(45) NOT NULL,
   `QuestionPackID` INT(11) NOT NULL,
   `QuestionID` INT(11) NOT NULL,
@@ -431,21 +454,22 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackResponses` (
   INDEX `QuestionPackResponses.QuestionPackID_idx` (`QuestionPackID` ASC) VISIBLE,
   CONSTRAINT `QuestionPackResponses.AnswerID`
     FOREIGN KEY (`AnswerID`)
-    REFERENCES `InsigniaDB_Dev`.`Answers` (`AnswerID`),
+    REFERENCES `APIServerDev`.`Answers` (`AnswerID`),
   CONSTRAINT `QuestionPackResponses.QuestionID`
     FOREIGN KEY (`QuestionID`)
-    REFERENCES `InsigniaDB_Dev`.`Questions` (`QuestionID`),
+    REFERENCES `APIServerDev`.`Questions` (`QuestionID`),
   CONSTRAINT `QuestionPackResponses.QuestionPackID`
     FOREIGN KEY (`QuestionPackID`)
-    REFERENCES `InsigniaDB_Dev`.`QuestionPacks` (`QuestionPackID`))
+    REFERENCES `APIServerDev`.`QuestionPacks` (`QuestionPackID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionPackScores`
+-- Table `APIServerDev`.`QuestionPackScores`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackScores` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionPackScores` (
   `ScoreID` INT(11) NOT NULL AUTO_INCREMENT,
   `UserID` INT(11) NOT NULL,
   `QuestionPackID` INT(11) NOT NULL,
@@ -458,18 +482,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionPackScores` (
   INDEX `QuestionPackScores.QuestionPackID_idx` (`QuestionPackID` ASC) VISIBLE,
   CONSTRAINT `QuestionPackScores.QuestionPackID`
     FOREIGN KEY (`QuestionPackID`)
-    REFERENCES `InsigniaDB_Dev`.`QuestionPacks` (`QuestionPackID`),
+    REFERENCES `APIServerDev`.`QuestionPacks` (`QuestionPackID`),
   CONSTRAINT `QuestionPackScores.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`QuestionsQuestionBlobs`
+-- Table `APIServerDev`.`QuestionsQuestionBlobs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionsQuestionBlobs` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`QuestionsQuestionBlobs` (
   `QuestionID` INT(11) NOT NULL,
   `QuestionBlobID` INT(11) NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -477,18 +502,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`QuestionsQuestionBlobs` (
   INDEX `QuestionsQuestionBlobs.QuestionBlobID_idx` (`QuestionBlobID` ASC) VISIBLE,
   CONSTRAINT `QuestionsQuestionBlobs.QuestionBlobID`
     FOREIGN KEY (`QuestionBlobID`)
-    REFERENCES `InsigniaDB_Dev`.`QuestionBlobs` (`QuestionBlobID`),
+    REFERENCES `APIServerDev`.`QuestionBlobs` (`QuestionBlobID`),
   CONSTRAINT `QuestionsQuestionBlobs.QuestionID`
     FOREIGN KEY (`QuestionID`)
-    REFERENCES `InsigniaDB_Dev`.`Questions` (`QuestionID`))
+    REFERENCES `APIServerDev`.`Questions` (`QuestionID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`SubjectTeacher`
+-- Table `APIServerDev`.`SubjectTeacher`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`SubjectTeacher` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`SubjectTeacher` (
   `UserID` INT NOT NULL,
   `SubjectID` INT NOT NULL,
   `Timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -496,18 +522,19 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`SubjectTeacher` (
   INDEX `SubjectID_idx` (`SubjectID` ASC) VISIBLE,
   CONSTRAINT `SubjectTeacher.SubjectID`
     FOREIGN KEY (`SubjectID`)
-    REFERENCES `InsigniaDB_Dev`.`Subjects` (`SubjectID`),
+    REFERENCES `APIServerDev`.`Subjects` (`SubjectID`),
   CONSTRAINT `SubjectTeacher.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `InsigniaDB_Dev`.`UserLogon`
+-- Table `APIServerDev`.`UserLogon`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`UserLogon` (
+CREATE TABLE IF NOT EXISTS `APIServerDev`.`UserLogon` (
   `UserID` INT(11) NOT NULL,
   `LastLogonDate` DATETIME NOT NULL,
   `LogonAttempts` INT(11) NOT NULL,
@@ -517,9 +544,10 @@ CREATE TABLE IF NOT EXISTS `InsigniaDB_Dev`.`UserLogon` (
   UNIQUE INDEX `UserID_UNIQUE` (`UserID` ASC) VISIBLE,
   CONSTRAINT `UserLogon.UserID`
     FOREIGN KEY (`UserID`)
-    REFERENCES `InsigniaDB_Dev`.`Users` (`UserID`))
+    REFERENCES `APIServerDev`.`Users` (`UserID`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4;
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
