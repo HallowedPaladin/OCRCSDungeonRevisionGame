@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GameServer.Contexts;
 using GameServer.Entities;
 using GameServer.DTO;
+using GameServer.EntityHelpers;
 
 namespace GameServer.Controllers
 {
@@ -49,6 +50,7 @@ namespace GameServer.Controllers
                 PhoneCountryCode = s.PhoneCountryCode,
                 PhoneNumber = s.PhoneNumber,
                 RegistrationDate = s.RegistrationDate,
+                Timestamp = s.Timestamp,
                 UserTypeId = s.UserTypeId
             }
            ).ToListAsync();
@@ -104,6 +106,7 @@ namespace GameServer.Controllers
                 userDTO.PhoneNumber = user.PhoneNumber;
                 userDTO.RegistrationDate = user.RegistrationDate;
                 userDTO.UserTypeId = user.UserTypeId;
+                userDTO.Timestamp = user.Timestamp;
                 return userDTO;
             }
         }
@@ -210,23 +213,18 @@ namespace GameServer.Controllers
         [HttpPost("PostUserDTO")]
         public async Task<ActionResult<UserDTO>> PostUserDTO(UserDTO userDTO)
         {
-            var user = new User()
+            var userHelper = new UserHelper(_context);
+
+            try
             {
-                UserName = userDTO.UserName,
-                FirstName = userDTO.FirstName,
-                FamilyName = userDTO.FamilyName,
-                DateOfBirth = userDTO.DateOfBirth,
-                Email = userDTO.Email,
-                PhoneCountryCode = userDTO.PhoneCountryCode,
-                PhoneNumber = userDTO.PhoneNumber,
-                RegistrationDate = userDTO.RegistrationDate,
-                UserTypeId = userDTO.UserTypeId
-            };
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetUserDTO), new { userId = user.UserId }, userDTO);
+                UserDTO newUserDTO = userHelper.createUser(userDTO);
+                return CreatedAtAction(nameof(GetUserDTO), new { userId = newUserDTO.UserId }, newUserDTO);
+            }
+            catch (Exception e)
+            {
+                // TODO improve information in the error response
+                return BadRequest();
+            }
         }
 
         // DELETE: api/User/5
