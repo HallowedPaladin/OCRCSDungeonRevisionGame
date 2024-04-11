@@ -21,6 +21,11 @@ MySQL Database Support
 Hashcode generation support:
 - BCrypt.Net.Next v4.0.3
 
+Open a Terminal (command line)
+==============================
+Right click on the root of the project in the Solution Explorer pane.
+Choose 'Open In Terminal'
+This will open a terminal in teh root of the project (same location as the .sln file)
 
 Installing DotNet Tools
 =======================
@@ -109,20 +114,3 @@ Right-click on the Controllers folder -> Add -> Controller -> Select "API Contro
 Right-click on the Controllers folder -> Add -> New Scaffolding... -> API Controller with Actions Using Entity Framework
 
 This will generate a controller with basic CRUD operations for your entity.
-
-
-Errors
-
-Running the project
-"Unable to configure HTTPS endpoint. No server certificate was specified, and the default developer certificate could not be found or is out of date.
-To generate a developer certificate run 'dotnet dev-certs https'.
-To trust the certificate (Windows and macOS only) run
-'dotnet dev-certs https --trust'.\nFor more information on configuring HTTPS see https://go.microsoft.com/fwlink/?linkid=848054."
-
-
-Generating Controllers for the DB tables
-No database provider has been configured for this DbContext.
-A provider can be configured by overriding the 'DbContext.OnConfiguring' method or by using 'AddDbContext' on the application service provider.
-If 'AddDbContext' is used, then also ensure that your DbContext type accepts a DbContextOptions<TContext> object in its constructor and passes it to the base constructor for DbContext.
-
-
