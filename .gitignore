@@ -530,4 +530,5 @@ Temporary Items
 ##
 ###################
 ##
-# None yet!
+# Override the Visual Studio ignore .meta for Unity
+!Insignia/**/*.meta
