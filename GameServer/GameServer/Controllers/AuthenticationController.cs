@@ -20,108 +20,27 @@ namespace GameServer.Controllers
 
         // Post: api/Authentication
         [HttpPost("Logon")]
-        public async Task<ActionResult<UserDTO>> Logon(CredentialsDTO logonDTO)
+        public async Task<ActionResult<UserDTO>> Logon(CredentialsDTO credentialsDTO)
         {
-            UserDTO userDTO = new UserDTO();
-            bool error = true;
+            UserHelper userHelper = new UserHelper(_context);
+            UserDTO userDTO;
 
-            // Only validate if we have a UserName and a Password
-            if (logonDTO.UserName != null && logonDTO.Password != null)
+            try
             {
-                // Read the User record
-                //var user = await _context.Users.FindAsync(logonDTO.UserName);
-                //var user = from u in _context.Users where u.UserName.Equals(logonDTO.UserName) select u;
-                User user = _context.Users.SingleOrDefault(user => user.UserName == logonDTO.UserName);
-
-                if (user != null)
+                userDTO = userHelper.LogonUser(credentialsDTO);
+                if (userDTO.UserId != 0)
                 {
-                    // Read the Logon record and make sure the account is not locked
-                    var userLogon = await _context.UserLogons.FindAsync(user.UserId);
-                    if (userLogon == null)
-                    {
-                        // First time so create the logon record
-                        userLogon = new UserLogon();
-                        userLogon.UserId = user.UserId;
-                        userLogon.IsLocked = 0;
-                    }
-                    if (userLogon.IsLocked == 0)
-                    {
-                        // The account is not locked
-                        // Proceed with password validation
-                        // Read the password record
-                        var passwordRecord = await _context.Passwords.FindAsync(user.UserId);
-
-                        if (passwordRecord != null)
-                        {
-                            // Compare passwords for a match
-                            // TODO hash the passwords
-                            if (logonDTO.Password.Equals(passwordRecord.PasswordHash))
-                            {
-                                // The passwords match!
-                                // Reset the logon count and save the record
-                                userLogon.LogonAttempts = 0;
-                                _context.Entry(userLogon).State = EntityState.Modified;
-                                try
-                                {
-                                    await _context.SaveChangesAsync();
-                                }
-                                catch (DbUpdateConcurrencyException)
-                                {
-                                    // Somebody was trying to logon in parallel
-                                    // TODO set the correct retun code
-                                }
-                                // Success!
-
-                                userDTO.UserId = user.UserId;
-                                userDTO.UserName = user.UserName;
-                                userDTO.FirstName = user.FirstName;
-                                userDTO.FamilyName = user.FamilyName;
-                                userDTO.DateOfBirth = user.DateOfBirth;
-                                userDTO.Email = user.Email;
-                                userDTO.PhoneCountryCode = user.PhoneCountryCode;
-                                userDTO.PhoneNumber = user.PhoneNumber;
-                                userDTO.RegistrationDate = user.RegistrationDate;
-                                userDTO.UserTypeId = user.UserTypeId;
-                                userDTO.Timestamp = user.Timestamp;
-                                error = false;
-                            }
-                            else
-                            {
-                                // The password comparison failed
-                                // Update the number of attempted logons
-                                userLogon.LogonAttempts = userLogon.LogonAttempts + 1;
-                                // Check maximum nuber of logon attmpts and lock the account
-                                if (userLogon.LogonAttempts >= 3)
-                                {
-                                    userLogon.IsLocked = 1;
-                                }
-                                // Save the logon attmpts record
-                                _context.Entry(userLogon).State = EntityState.Modified;
-                                try
-                                {
-                                    await _context.SaveChangesAsync();
-                                }
-                                catch (DbUpdateConcurrencyException)
-                                {
-                                    // Somebody was trying to logon in parallel
-                                    // TODO set the correct retun code
-                                }
-                            }
-                        }
-
-                    }
+                    return Ok(userDTO);
+                }
+                else
+                {
+                    return NotFound();
                 }
             }
-
-            if (error)
+            catch (Exception)
             {
                 return NotFound();
             }
-            else
-            {
-                return userDTO;
-            }
-
         }
 
         // Post: api/Authentication
@@ -158,7 +77,29 @@ namespace GameServer.Controllers
             // Verify email
             // Verify phone
 
-            return newUserDTO;
+            return Ok(newUserDTO);
+        }
+
+        // Post: api/Authentication
+        [HttpPost("CreatLogon")]
+        public async Task<ActionResult<UserLogon>> CreateLogon(UserLogonDTO userLogonDTO)
+        {
+            var userLogon = new UserLogon();
+
+            userLogon.UserId = userLogonDTO.UserId;
+            userLogon.LastLogonDate = DateTime.Now;
+            userLogon.IsLocked = 0;
+            userLogon.LogonAttempts = 0;
+            _context.UserLogons.Add(userLogon);
+            try
+            {
+                _context.SaveChanges();
+                return Ok(userLogon);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return Conflict();
+            }
         }
     }
 }
