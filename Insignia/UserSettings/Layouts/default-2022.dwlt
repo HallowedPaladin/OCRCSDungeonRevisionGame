@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1706.6667
     height: 1024
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Inspector
   m_RootView: {fileID: 8}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 117
+  controlID: 53
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 115
+  controlID: 171
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -119,8 +119,8 @@ MonoBehaviour:
     y: 0
     width: 403.33325
     height: 974
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -276,7 +276,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 116
+  controlID: 42
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 40
+  controlID: 43
 --- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_MaxSize: {x: 10000, y: 10000}
   m_TitleContent:
     m_Text: Project
-    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
@@ -443,7 +443,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Scripts/TitleScreen
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -451,16 +451,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Scripts/TitleScreen
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\lukez_cewjlff\OneDrive\Documents\GitHub\OCRCSDungeonRevisionGame\Insignia
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 136.49994}
-    m_SelectedIDs: 54620000
-    m_LastClickedID: 25172
-    m_ExpandedIDs: 000000005262000056620000586200005a6200005c6200005e62000076620000806200007269000000ca9a3b
+    scrollPos: {x: 0, y: 65.997925}
+    m_SelectedIDs: 78640000
+    m_LastClickedID: 25720
+    m_ExpandedIDs: 000000004c6400004e64000050640000526400005464000056640000586400005a64000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -488,7 +488,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000526200005462000056620000586200005a6200005c6200005e620000
+    m_ExpandedIDs: 000000004c6400004e64000050640000526400005464000056640000586400005a640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -515,7 +515,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 246600007c660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_MaxSize: {x: 10000, y: 10000}
   m_TitleContent:
     m_Text: Project
-    m_Image: {fileID: -5467254957812901981, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -5179483145760003458, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
@@ -589,7 +589,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Level1
+    - Assets/TextMesh Pro/Resources/Fonts & Materials
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -597,30 +597,30 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Level1
+  - Assets/TextMesh Pro/Resources/Fonts & Materials
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\lukez_cewjlff\OneDrive\Documents\GitHub\OCRCSDungeonRevisionGame\Insignia
   m_LockTracker:
     m_IsLocked: 1
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 42.999878}
-    m_SelectedIDs: 74690000
-    m_LastClickedID: 26996
-    m_ExpandedIDs: 000000005262000056620000586200005a6200005c6200005e62000076620000806200008662000000ca9a3b
+    scrollPos: {x: 0, y: 236.33331}
+    m_SelectedIDs: 986b0000
+    m_LastClickedID: 27544
+    m_ExpandedIDs: 000000004c6400004e64000050640000526400005464000056640000586400005a64000088640000886b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: Game
-      m_OriginalName: Game
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 25212
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 7}
     m_SearchString: 
@@ -634,7 +634,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000526200005462000056620000586200005a6200005c6200005e620000
+    m_ExpandedIDs: 000000004c6400004e64000050640000526400005464000056640000586400005a640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -662,7 +662,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c623000000000000246600007c660000
+    m_ExpandedInstanceIDs: c623000000000000246600007c66000014640000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -689,7 +689,7 @@ MonoBehaviour:
     m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
-  m_DirectoriesAreaWidth: 207
+  m_DirectoriesAreaWidth: 315.6667
 --- !u!114 &18
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -706,7 +706,7 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Inspector
-    m_Image: {fileID: -2667387946076563598, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -440750813802333266, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Hierarchy
-    m_Image: {fileID: 7966133145522015247, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -3734745235275155857, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
@@ -774,9 +774,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 8a690000
+      m_SelectedIDs: 00630000
       m_LastClickedID: 0
-      m_ExpandedIDs: fa34feff0638feff0838feffb83dfeff143efeff6a3efeffc63efeff1c3ffeffe03ffeffcc41feff3242feff8e42feffe442feffd24ffeff4250feff9651feffda51feff2e52feff8052feff9853feff2a54feffa45efeff2c61feff4662feff1a64feffe266feff5267feffba67feff2668feffe869feff6c6afeffca6afeff8875feff8476feffda76feffb07afeff087bfefff07bfeff427cfeffec7dfeff827efeff387ffeffd87ffeff0084feff5484feffa084feff6289feffb889feff0c8afeffc08cfeff148dfeff288ffeff888ffeff2e93feff3696feff089afeff729bfeff969cfeff249efeff969efeffb89ffeff0aa0feff4ea0feffb0a0feff08a1feffe0a6feff38a7feff02aafeff56aafeffa6aafeff4cb0feff34b1feffdeb3feff44b4feffaab4fefffab4feff4cb5feffaeb5feff08b6feff12b7feff42bafefffac1feff7ec3feff02c4feff68c4feffc4c4feff0cc5feff54c5feffaac5fefffec5feff8cc6feff36d9feffced9feff2adafeff90dafeffecdafeffa8ecfeff7eedfeff8ceefeff62f5feff52f7feff18fffeff70fffeff6605ffffc805ffff2006ffff0e0bffff740cffff8a10ffff9010ffff8011ffffd011ffff2212ffff6013ffffb013ffff2e14ffffc814ffff2015ffff8615ffff581dffff821fffff8020ffff8220ffff0e21ffff1421ffff0626ffff3e2cffff8e2cffffec32ffff9436ffff1c37ffff0a38ffff4e38ffff023affff603bffff363cffffe43dffff283fffff7a3fffffde3fffff8240ffffe240ffff3441ffff7c43ffff784dffff7a4dffff5055ffffd459ffff4265ffff0068ffff446bffffea6bffff1e6dffff726dffffdc6fffff9c70ffffee70ffff2072ffff6272ffffbe72ffff1273ffff3287ffff8287ffffc8a2ffffd6a2ffff14b9ffff72b9ffff86b9ffff38cbffff20cdffff02d9ffffd0daffffe4daffff74e3ffff78e3ffff0ce5ffff0ee5ffff26ecffff3aecffff0cefffffa6efffff30f0ffffccf0ffff00f6ffff38f6ffffb8f6ffff08f7ffff50f8ffff04f9ffff1cfbffff546b0000a46b0000066c0000566c0000486e0000746e0000186f0000446f0000d47c0000007d00003a8400008284000082860000e0860000368b0000d08d0000328f0000ce8f00000e9000003a900000ac900000dc900000f6900000d8910000b49200002895000058950000e2960000fe960000f2970000de9d000024a100005aa10000a2a400006aa7000090a80000a2a80000caa80000e2a800002ca9000034a9000072ab000086ad00009cae0000b8ae00007ab7000096b70000d2b7000008b8000024b80000e0c50000f2c50000fcc500001cc6000030c900003ac900004cc9000056c9000076c9000092c9000076ca000088ca0000c4ca0000f6cf00002ed00000a6d2000006da00006ada0000e8e500006ee7000078e70000a8e9000012ea000044eb000074eb00006cec00007eec0000baec000080ef0000eaef0000b6f60000c0f600003a090100f01c01008a1d0100381e0100d21e0100342101003e210100fe240100662e0100d02e01000a3a01002e3c01004e3c0100843c0100983c0100ba3c0100c43c0100603e01009e3e01003c3f01007c3f010092400100a0400100d6400100ea4001000c410100e04301001e4401009a440100c844010080480100bc480100c6480100284a01004a4a01009e4a0100d44a0100104b01001a4b0100805b0100ac5b01009a5f0100
+      m_ExpandedIDs: 00fbffff60630000846300008e630000c4630000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -816,7 +816,7 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Scene
-    m_Image: {fileID: 2593428753322112591, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: 8634526014445323508, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
@@ -864,7 +864,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 24.666666}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -890,7 +890,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 24.666666}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-transform-toolbar
@@ -1123,7 +1123,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       floating: 0
       collapsed: 0
-      displayed: 1
+      displayed: 0
       snapOffset: {x: 48, y: 48}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
@@ -1195,9 +1195,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 503.6667, y: 267.66666, z: 0}
+    m_Target: {x: -56.98026, y: 473.14355, z: -3.1864989}
     speed: 2
-    m_Value: {x: 503.6667, y: 267.66666, z: 0}
+    m_Value: {x: -56.98026, y: 473.14355, z: -3.1864989}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1247,9 +1247,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 570.37317
+    m_Target: 889.0229
     speed: 2
-    m_Value: 570.37317
+    m_Value: 889.0229
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1290,7 +1290,7 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Game
-    m_Image: {fileID: -6423792434712278376, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: 4621777727084837110, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_MaxSize: {x: 4000, y: 4000}
   m_TitleContent:
     m_Text: Console
-    m_Image: {fileID: -4327648978806127646, guid: 0000000000000000d000000000000000, type: 0}
+    m_Image: {fileID: -4950941429401207979, guid: 0000000000000000d000000000000000, type: 0}
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
