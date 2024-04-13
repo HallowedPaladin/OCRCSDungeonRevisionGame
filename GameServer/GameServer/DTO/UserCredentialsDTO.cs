@@ -1,6 +1,6 @@
 ﻿namespace GameServer.DTO
 {
-	public class CredentialsDTO
+	public class UserCredentialsDTO
 	{
         public string UserName { get; set; } = null!;
 

@@ -14,9 +14,13 @@
 
         public string? Email { get; set; }
 
+        public sbyte? IsEmailVerified { get; set; }
+
         public int? PhoneCountryCode { get; set; }
 
-        public int? PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
+
+        public sbyte? IsPhoneVerified { get; set; }
 
         public DateTime RegistrationDate { get; set; }
 

@@ -17,55 +17,55 @@ namespace GameServer.Controllers
     [Produces(MediaTypeNames.Application.Json)]
     [Consumes(MediaTypeNames.Application.Json)]
 #endif
-    public class UserLogonController : ControllerBase
+    public class UserCredentialController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
 
-        public UserLogonController(InsigniaDBContext context)
+        public UserCredentialController(InsigniaDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/UserLogon
+        // GET: api/UserCredential
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserLogon>>> GetUserLogons()
+        public async Task<ActionResult<IEnumerable<UserCredential>>> GetUserCredentials()
         {
-          if (_context.UserLogons == null)
+          if (_context.UserCredentials == null)
           {
               return NotFound();
           }
-            return await _context.UserLogons.ToListAsync();
+            return await _context.UserCredentials.ToListAsync();
         }
 
-        // GET: api/UserLogon/5
+        // GET: api/UserCredential/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserLogon>> GetUserLogon(int id)
+        public async Task<ActionResult<UserCredential>> GetUserCredential(int id)
         {
-          if (_context.UserLogons == null)
+          if (_context.UserCredentials == null)
           {
               return NotFound();
           }
-            var userLogon = await _context.UserLogons.FindAsync(id);
+            var userCredential = await _context.UserCredentials.FindAsync(id);
 
-            if (userLogon == null)
+            if (userCredential == null)
             {
                 return NotFound();
             }
 
-            return userLogon;
+            return userCredential;
         }
 
-        // PUT: api/UserLogon/5
+        // PUT: api/UserCredential/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUserLogon(int id, UserLogon userLogon)
+        public async Task<IActionResult> PutUserCredential(int id, UserCredential userCredential)
         {
-            if (id != userLogon.UserId)
+            if (id != userCredential.UserId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(userLogon).State = EntityState.Modified;
+            _context.Entry(userCredential).State = EntityState.Modified;
 
             try
             {
@@ -73,7 +73,7 @@ namespace GameServer.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserLogonExists(id))
+                if (!UserCredentialExists(id))
                 {
                     return NotFound();
                 }
@@ -86,23 +86,23 @@ namespace GameServer.Controllers
             return NoContent();
         }
 
-        // POST: api/UserLogon
+        // POST: api/UserCredential
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserLogon>> PostUserLogon(UserLogon userLogon)
+        public async Task<ActionResult<UserCredential>> PostUserCredential(UserCredential userCredential)
         {
-          if (_context.UserLogons == null)
+          if (_context.UserCredentials == null)
           {
-              return Problem("Entity set 'InsigniaDBContext.UserLogons'  is null.");
+              return Problem("Entity set 'InsigniaDBContext.UserCredentials'  is null.");
           }
-            _context.UserLogons.Add(userLogon);
+            _context.UserCredentials.Add(userCredential);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (UserLogonExists(userLogon.UserId))
+                if (UserCredentialExists(userCredential.UserId))
                 {
                     return Conflict();
                 }
@@ -112,32 +112,32 @@ namespace GameServer.Controllers
                 }
             }
 
-            return CreatedAtAction("GetUserLogon", new { id = userLogon.UserId }, userLogon);
+            return CreatedAtAction("GetUserCredential", new { id = userCredential.UserId }, userCredential);
         }
 
-        // DELETE: api/UserLogon/5
+        // DELETE: api/UserCredential/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserLogon(int id)
+        public async Task<IActionResult> DeleteUserCredential(int id)
         {
-            if (_context.UserLogons == null)
+            if (_context.UserCredentials == null)
             {
                 return NotFound();
             }
-            var userLogon = await _context.UserLogons.FindAsync(id);
-            if (userLogon == null)
+            var userCredential = await _context.UserCredentials.FindAsync(id);
+            if (userCredential == null)
             {
                 return NotFound();
             }
 
-            _context.UserLogons.Remove(userLogon);
+            _context.UserCredentials.Remove(userCredential);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserLogonExists(int id)
+        private bool UserCredentialExists(int id)
         {
-            return (_context.UserLogons?.Any(e => e.UserId == id)).GetValueOrDefault();
+            return (_context.UserCredentials?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
     }
 }

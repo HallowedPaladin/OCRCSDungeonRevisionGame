@@ -36,8 +36,6 @@ public partial class InsigniaDBContext : DbContext
 
     public virtual DbSet<ClassroomSubject> ClassroomSubjects { get; set; }
 
-    public virtual DbSet<Password> Passwords { get; set; }
-
     public virtual DbSet<Preference> Preferences { get; set; }
 
     public virtual DbSet<Question> Questions { get; set; }
@@ -65,6 +63,8 @@ public partial class InsigniaDBContext : DbContext
     public virtual DbSet<SubjectTeacher> SubjectTeachers { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserCredential> UserCredentials { get; set; }
 
     public virtual DbSet<UserLogon> UserLogons { get; set; }
 
@@ -316,27 +316,6 @@ public partial class InsigniaDBContext : DbContext
                 .HasForeignKey(d => d.SubjectId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("ClassroomSubject.SubjectID");
-        });
-
-        modelBuilder.Entity<Password>(entity =>
-        {
-            entity.HasKey(e => e.UserId).HasName("PRIMARY");
-
-            entity.ToTable("Passwords", "InsigniaDB_Dev");
-
-            entity.HasIndex(e => e.UserId, "UserID_UNIQUE").IsUnique();
-
-            entity.Property(e => e.UserId).HasColumnName("UserID");
-            entity.Property(e => e.PasswordHash).HasMaxLength(100);
-            entity.Property(e => e.Timestamp)
-                .ValueGeneratedOnAddOrUpdate()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("timestamp");
-
-            entity.HasOne(d => d.User).WithOne(p => p.Password)
-                .HasForeignKey<Password>(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Passwords.UserID");
         });
 
         modelBuilder.Entity<Preference>(entity =>
@@ -687,6 +666,8 @@ public partial class InsigniaDBContext : DbContext
 
             entity.HasIndex(e => e.UserId, "UserID_UNIQUE").IsUnique();
 
+            entity.HasIndex(e => e.UserName, "UserName_UNIQUE").IsUnique();
+
             entity.HasIndex(e => e.UserName, "UserName_idx");
 
             entity.HasIndex(e => e.UserTypeId, "UserTypeID_idx");
@@ -696,6 +677,11 @@ public partial class InsigniaDBContext : DbContext
             entity.Property(e => e.Email).HasMaxLength(320);
             entity.Property(e => e.FamilyName).HasMaxLength(45);
             entity.Property(e => e.FirstName).HasMaxLength(45);
+            entity.Property(e => e.IsEmailVerified)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isEmailVerified");
+            entity.Property(e => e.IsPhoneVerified).HasDefaultValueSql("'0'");
+            entity.Property(e => e.PhoneNumber).HasMaxLength(15);
             entity.Property(e => e.RegistrationDate).HasColumnType("date");
             entity.Property(e => e.Timestamp)
                 .ValueGeneratedOnAddOrUpdate()
@@ -708,6 +694,27 @@ public partial class InsigniaDBContext : DbContext
                 .HasForeignKey(d => d.UserTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("Users.UserTypeID");
+        });
+
+        modelBuilder.Entity<UserCredential>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PRIMARY");
+
+            entity.ToTable("UserCredentials", "InsigniaDB_Dev");
+
+            entity.HasIndex(e => e.UserId, "UserID_UNIQUE").IsUnique();
+
+            entity.Property(e => e.UserId).HasColumnName("UserID");
+            entity.Property(e => e.PasswordHash).HasMaxLength(100);
+            entity.Property(e => e.Timestamp)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("timestamp");
+
+            entity.HasOne(d => d.User).WithOne(p => p.UserCredential)
+                .HasForeignKey<UserCredential>(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("Passwords.UserID");
         });
 
         modelBuilder.Entity<UserLogon>(entity =>

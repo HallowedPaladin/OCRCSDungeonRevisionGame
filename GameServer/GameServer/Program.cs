@@ -9,6 +9,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MySql.EntityFrameworkCore.Extensions;
+using Microsoft.AspNetCore.Mvc;
+
+#if ApiConventions
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
+#endif
 
 var builder = WebApplication.CreateBuilder(args);
 

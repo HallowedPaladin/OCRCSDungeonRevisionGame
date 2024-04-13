@@ -64,7 +64,7 @@ namespace GameServer.EntityHelpers
             return userDTO;
         }
 
-        public UserDTO LogonUser(CredentialsDTO credentialsDTO)
+        public UserDTO LogonUser(UserCredentialsDTO credentialsDTO)
         {
             UserDTO userDTO = new UserDTO();
             UserHelper userHelper = new UserHelper(_context);
@@ -101,7 +101,7 @@ namespace GameServer.EntityHelpers
                         // The account is not locked
                         // Proceed with password validation
                         // Read the password record
-                        var passwordRecord = _context.Passwords.Find(user.UserId);
+                        var passwordRecord = _context.UserCredentials.Find(user.UserId);
 
                         if (passwordRecord != null)
                         {
@@ -124,18 +124,8 @@ namespace GameServer.EntityHelpers
                                 }
                                 // Success!
 
-                                userDTO.UserId = user.UserId;
-                                userDTO.UserName = user.UserName;
-                                userDTO.FirstName = user.FirstName;
-                                userDTO.FamilyName = user.FamilyName;
-                                userDTO.DateOfBirth = user.DateOfBirth;
-                                userDTO.Email = user.Email;
-                                userDTO.PhoneCountryCode = user.PhoneCountryCode;
-                                userDTO.PhoneNumber = user.PhoneNumber;
-                                userDTO.RegistrationDate = user.RegistrationDate;
-                                userDTO.UserTypeId = user.UserTypeId;
-                                userDTO.Timestamp = user.Timestamp;
-                            }
+                                userDTO = PopulateUserDTO(user, userDTO);
+;                            }
                             else
                             {
                                 // The password comparison failed
@@ -174,11 +164,11 @@ namespace GameServer.EntityHelpers
             {
                 String passwordHash = DoHash(passwordString);
 
-                var password = new Password();
-                password.UserId = userID;
-                password.PasswordHash = passwordHash;
+                var userCredential = new UserCredential();
+                userCredential.UserId = userID;
+                userCredential.PasswordHash = passwordHash;
 
-                _context.Passwords.Add(password);
+                _context.UserCredentials.Add(userCredential);
 
                 try
                 {
@@ -208,8 +198,7 @@ namespace GameServer.EntityHelpers
 
             if (plaintext != null && hashedText != null)
             {
-                string hashedPlainText = DoHash(plaintext);
-                if (hashedPlainText.Equals(hashedText))
+                if (BCrypt.Verify(plaintext, hashedText))
                 {
                     valid = true;
                 }
@@ -220,7 +209,7 @@ namespace GameServer.EntityHelpers
 
         private bool PasswordExists(int id)
         {
-            return (_context.Passwords?.Any(e => e.UserId == id)).GetValueOrDefault();
+            return (_context.UserCredentials?.Any(e => e.UserId == id)).GetValueOrDefault();
         }
 
         private Boolean ValidatePassword(string password)
@@ -233,6 +222,25 @@ namespace GameServer.EntityHelpers
         {
             string hashedPassword = BCrypt.HashPassword(password);
             return hashedPassword;
+        }
+
+        private UserDTO PopulateUserDTO(User user, UserDTO userDTO)
+        {
+            userDTO.DateOfBirth = user.DateOfBirth;
+            userDTO.Email = user.Email;
+            userDTO.FamilyName = user.FamilyName;
+            userDTO.FirstName = user.FirstName;
+            userDTO.IsEmailVerified = user.IsEmailVerified;
+            userDTO.IsPhoneVerified = user.IsPhoneVerified;
+            userDTO.PhoneCountryCode = user.PhoneCountryCode;
+            userDTO.PhoneNumber = user.PhoneNumber;
+            userDTO.RegistrationDate = user.RegistrationDate;
+            userDTO.Timestamp = user.Timestamp;
+            userDTO.UserId = user.UserId;
+            userDTO.UserName = user.UserName;
+            userDTO.UserTypeId = user.UserTypeId;
+
+            return userDTO;
         }
     }
 }

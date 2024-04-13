@@ -4,11 +4,16 @@ using GameServer.Contexts;
 using GameServer.Entities;
 using GameServer.DTO;
 using GameServer.EntityHelpers;
+using System.Net.Mime;
 
 namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+#if ProducesConsumes
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+#endif
     public class AuthenticationController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
@@ -20,7 +25,7 @@ namespace GameServer.Controllers
 
         // Post: api/Authentication
         [HttpPost("Logon")]
-        public async Task<ActionResult<UserDTO>> Logon(CredentialsDTO credentialsDTO)
+        public async Task<ActionResult<UserDTO>> Logon(UserCredentialsDTO credentialsDTO)
         {
             UserHelper userHelper = new UserHelper(_context);
             UserDTO userDTO;

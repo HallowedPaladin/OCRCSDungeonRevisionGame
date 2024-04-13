@@ -26,27 +26,59 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.17" />
+    <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="3.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="DTO\" />
     <None Remove="Notes\" />
     <None Remove="EntityHelpers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="AddTimestampAnnotationTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AddTimestampAnnotationTemplate.cs</LastGenOutput>
-    </None>
+    <None Remove="Swagger\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTO\" />
     <Folder Include="Notes\" />
     <Folder Include="EntityHelpers\" />
+    <Folder Include="Swagger\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="AddTimestampAnnotationTemplate.cs">
       <DependentUpon>AddTimestampAnnotationTemplate.tt</DependentUpon>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Swagger\GameServerSwagger.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <OpenApiReference Include="Swagger\GameServerSwagger.json" Namespace="GameServer.Client">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Link>OpenAPIs\GameServerSwagger.json</Link>
+    </OpenApiReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AddTimestampAnnotationTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AddTimestampAnnotationTemplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+    <Exec Command="swagger tofile --output Swagger/$(AssemblyName)Swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true"></Exec>
+  </Target>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;ProducesConsumes;ApiConventions;OperationId</DefineConstants>
+  </PropertyGroup>
+
 </Project>

@@ -7,11 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GameServer.Contexts;
 using GameServer.Entities;
+using System.Net.Mime;
 
 namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+#if ProducesConsumes
+    [Produces(MediaTypeNames.Application.Json)]
+    [Consumes(MediaTypeNames.Application.Json)]
+#endif
     public class UserTypeController : ControllerBase
     {
         private readonly InsigniaDBContext _context;

@@ -18,8 +18,12 @@ Microsoft Database Entity Framework support
 - Microsoft.EntityFrameworkCore.Tools v7.0.17
 MySQL Database Support
 - MySql.EntityFrameworkCore v7.0.14
+- Pomelo.EntityFrameworkCore.MySql v7.0.0
 Hashcode generation support:
 - BCrypt.Net.Next v4.0.3
+Json generation of the Swagger documentation
+- Newtonsoft.Json v13.0.3
+- Nswag.ApiDescription.Client v10.0.5 (automatically included as a dependency of Newtonsoft.Json)
 
 Open a Terminal (command line)
 ==============================
@@ -62,13 +66,17 @@ Generating Database Classes
 To build the EntityFramework classes from the DB...
 
 Generate (aka scaffold) the database classes from the MySQL DB (replace the parameters in chevrons<> with specific values).
+> dotnet ef dbcontext Scaffold "server=<localhost>;port=<port>;user=<user>;password=<password>;database=<schemaname>" MySql.EntityFrameworkCore --output-dir Entities -f  --project <projectname> --context InsigniaDBContext --context-dir Contexts
+
 *** Important #1 ***
 This needs to be run from the correct folder (the same folder where the Visual Studio .sln file is).
-> dotnet ef dbcontext Scaffold "server=<localhost>;port=<port>;user=<user>;password=<password>;database=<schemaname>" MySql.EntityFrameworkCore --output-dir Entities -f  --project <projectname> --context InsigniaDBContext --context-dir Contexts
- 
-Anotate the generate code to help manage concurrency conflicts (optimistic locking) using the [Timestamp] annotation.
+
+Anotate the generated code to help manage concurrency conflicts (optimistic locking) using the [Timestamp] annotation.  See below
+update - this has now ben automated.
+
 *** Important #2 ***
 Manual changes such as annotations will be deleted when the classes are regenerated.
+
 *** Important #3 ***
 The generated InsigniaDBContext class needs to be edited (insructions are in the generated code)   
     https://learn.microsoft.com/en-us/ef/core/saving/concurrency?tabs=data-annotations
@@ -77,9 +85,10 @@ The generated InsigniaDBContext class needs to be edited (insructions are in the
     - Add the annotation [Timestamp] to a suitable field (only one field per class, created specifically for this purpose)
  - The field MUST be a TIMESTAMP and MUST have 'ON UPDATE CURRENT_TIMESTAMP' defined on the field in the table
 
- UPDATE:
+ *** UPDATE ***
  The T4 script AddTimestampAnnotationTemplate.tt can be run (right click -> Tools -> Process T4 Template) and it will add the using clause and the annotation.
- This script shuld be run whenever the DB classes are regenerated.
+ *** Important ***
+ This script needs to be run whenever the DB classes are regenerated.
 
 
 Config the project to use the DB
@@ -95,18 +104,16 @@ Config the project to use the DB
     builder.Services.AddDbContext<InsigniaDBContext>(options =>
     {
         options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-                   new MySqlServerVersion(new Version(8, 3, 0))); // Specify your MySQL server version here
+                   new MySqlServerVersion(new Version(8, 0, 36))); // Specify your MySQL server version here
     });
 
-#3 Tidy upthe OnConfiguring method in the DBConext class
+#3 Tidy upthe OnConfiguring method in the InsigniaDBContext class
 protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 {}
 
 
-API Enabling the DB Classes
-===========================
-
-Create Web API Controllers:
+Create Web API Controllers
+==========================
 
 Right-click on the Controllers folder -> Add -> Controller -> Select "API Controller with actions, using Entity Framework" -> Choose your model class and data context class.
 
@@ -114,3 +121,22 @@ Right-click on the Controllers folder -> Add -> Controller -> Select "API Contro
 Right-click on the Controllers folder -> Add -> New Scaffolding... -> API Controller with Actions Using Entity Framework
 
 This will generate a controller with basic CRUD operations for your entity.
+
+
+Open API Tool
+=============
+Insall the tool for generating the Swagger json file:
+> dotnet tool install --global Swashbuckle.AspNetCore.Cli
+This should install the same version (6.5.0) as for the Swashbuckle NuGet package used in this poject
+
+Run the tool
+> swagger tofile --output Swagger/GameServerSwagger.json> GameServer/bin/Debug/GameServer.dll v1
+*** Update ***
+This has been automated to be regenerated whenever the project is built.  The following config was added to the end of the
+Visual Studio .csproj file.  Note that this places teh file in the Swagger folder so it will be under source control:
+  <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
+    <Exec Command="swagger tofile --output Swagger/$(AssemblyName)Swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true"></Exec>
+  </Target>
+
+A 'ConnectedService' has been defined using this Swagger json file.  Whenever the json is changed the Connected Service
+will rebuild a .cs client file in the 'obj' folder.  This folder is excluded from source control.
