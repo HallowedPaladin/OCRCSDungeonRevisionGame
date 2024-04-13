@@ -73,6 +73,11 @@
       <LastGenOutput>AddTimestampAnnotationTemplate.cs</LastGenOutput>
     </None>
   </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);ApiConventions</DefineConstants>
+  </PropertyGroup>
+
   <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
     <Exec Command="swagger tofile --output Swagger/$(AssemblyName)Swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true"></Exec>
   </Target>
