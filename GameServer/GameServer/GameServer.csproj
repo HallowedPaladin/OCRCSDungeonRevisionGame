@@ -35,6 +35,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,17 +43,28 @@
     <None Remove="Notes\" />
     <None Remove="EntityHelpers\" />
     <None Remove="Swagger\" />
+    <None Remove="OpenAPIs\" />
+    <None Remove="Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTO\" />
     <Folder Include="Notes\" />
     <Folder Include="EntityHelpers\" />
     <Folder Include="Swagger\" />
+    <Folder Include="OpenAPIs\" />
+    <Folder Include="Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="AddTimestampAnnotationTemplate.cs">
       <DependentUpon>AddTimestampAnnotationTemplate.tt</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AddTimestampAnnotationTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AddTimestampAnnotationTemplate.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -66,24 +78,12 @@
       <Link>OpenAPIs\GameServerSwagger.json</Link>
     </OpenApiReference>
   </ItemGroup>
-
-  <ItemGroup>
-    <None Update="AddTimestampAnnotationTemplate.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>AddTimestampAnnotationTemplate.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);ApiConventions</DefineConstants>
-  </PropertyGroup>
-
   <Target Name="Generate OpenAPI Specification Document" AfterTargets="Build">
     <Exec Command="swagger tofile --output Swagger/$(AssemblyName)Swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true"></Exec>
   </Target>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DefineConstants>TRACE;DEBUG;NET;NET5_0;NETCOREAPP;ProducesConsumes;ApiConventions;OperationId</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET;NET7_0;NETCOREAPP;ProducesConsumes;ApiConventions;OperationId</DefineConstants>
   </PropertyGroup>
 
 </Project>

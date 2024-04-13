@@ -23,7 +23,14 @@ Hashcode generation support:
 - BCrypt.Net.Next v4.0.3
 Json generation of the Swagger documentation
 - Newtonsoft.Json v13.0.3
-- Nswag.ApiDescription.Client v10.0.5 (automatically included as a dependency of Newtonsoft.Json)
+- Nswag.ApiDescription.Client v10.0.5
+JWT (Json Web Tokens) used for securing API calls
+- System.IdentityModel.Tokens.Jwt v7.5.1
+
+*** Note ***
+The versions of the NuGet packages are chosen to work with .Net framework version 7.x.
+This is because .Net Framework version 8.0 is not fully supported on MacOS, particulalry by Visual Studio.
+In future Visual Studio Code will provide v8.x support but as of writing it's not yet ready.
 
 Open a Terminal (command line)
 ==============================
@@ -138,5 +145,7 @@ Visual Studio .csproj file.  Note that this places teh file in the Swagger folde
     <Exec Command="swagger tofile --output Swagger/$(AssemblyName)Swagger.json $(OutputPath)$(AssemblyName).dll v1" ContinueOnError="true"></Exec>
   </Target>
 
-A 'ConnectedService' has been defined using this Swagger json file.  Whenever the json is changed the Connected Service
-will rebuild a .cs client file in the 'obj' folder.  This folder is excluded from source control.
+A 'ConnectedService' has been defined using this Swagger json file.  This can be seen in the solution exlorer.
+Whenever the json is changed the Connected Service will rebuild a .cs client file in the 'obj' folder.  This folder is excluded from source control.
+The code can also be found by opening the 'OpenAPI - GameServerSwagger' in the Connected Services folder in solution explorer.  Expand the
+configuration section and scroll down to the 'View Code' button'.  Click to open the file.
