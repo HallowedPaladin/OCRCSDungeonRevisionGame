@@ -1,34 +1,22 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Security.Cryptography;
 
 namespace GameServer.Auth;
 
 public class SecretGenerator
 {
-    public static string GenerateRandomSecret(int length)
+    public string GenerateSecret(int length)
     {
-        // Define the characters allowed in the secret
-        const string allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var randomByteArray = new byte[length];
+        string secret = "";
 
-        // Create a byte array to hold the random bytes
-        byte[] randomBytes = new byte[length];
-
-        // Generate random bytes using RandomNumberGenerator
-        using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+        using (var randomNumberGenerator = RandomNumberGenerator.Create())
         {
-            rng.GetBytes(randomBytes);
+            // Fill the byte array with a cryptographically strong random sequence of bytes.
+            randomNumberGenerator.GetBytes(randomByteArray);
+            secret = Convert.ToBase64String(randomByteArray);
         }
 
-        // Convert the random bytes to characters
-        StringBuilder stringBuilder = new StringBuilder();
-        foreach (byte b in randomBytes)
-        {
-            // Ensure that the byte value is within the range of allowed characters
-            int index = b % allowedChars.Length;
-            stringBuilder.Append(allowedChars[index]);
-        }
-
-        return stringBuilder.ToString();
+        // Return a Base64 encoded random sequence
+        return secret;
     }
 }

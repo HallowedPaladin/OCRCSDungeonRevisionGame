@@ -10,6 +10,7 @@ using GameServer.Entities;
 using GameServer.DTO;
 using GameServer.EntityHelpers;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GameServer.Controllers
 {
@@ -30,6 +31,7 @@ namespace GameServer.Controllers
 
         // GET: api/User/GetUsersDTO
         [HttpGet("GetUsersDTO")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersDTO()
         {
             var List = await _context.Users.Select(

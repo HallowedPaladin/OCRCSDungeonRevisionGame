@@ -1,15 +1,12 @@
 ﻿using GameServer.Contexts;
 using Microsoft.EntityFrameworkCore;
-using MySql.EntityFrameworkCore;
-
-using Microsoft.Extensions.Configuration;
 using System.Text;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using MySql.EntityFrameworkCore.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using GameServer.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
+
 
 #if ApiConventions
 [assembly: ApiConventionType(typeof(DefaultApiConventions))]
@@ -18,7 +15,6 @@ using Microsoft.AspNetCore.Mvc;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,6 +27,26 @@ builder.Services.AddDbContext<InsigniaDBContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                new MySqlServerVersion(new Version(8, 0, 36))); // Specify your MySQL server version here
 });
+
+// JWT Tokens
+var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
+var secretGenerator = new SecretGenerator();
+var jwtSecret = secretGenerator.GenerateSecret(builder.Configuration.GetSection("Jwt:SecretLength").Get<int>());
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+ .AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = jwtIssuer,
+         ValidAudience = jwtIssuer,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+     };
+ });
 
 // Once all the services have been added then build the app.
 var app = builder.Build();
@@ -45,6 +61,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+// For JWT
+app.UseAuthentication();
 
 app.MapControllers();
 
