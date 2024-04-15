@@ -15,7 +15,7 @@ namespace GameServer.Auth
             _tokenExpirationInMinutes = tokenExpirationInMinutes;
         }
 
-        public string GenerateToken(string userId)
+        public string GenerateToken(int userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Convert.FromBase64String(_secretKey);
@@ -23,7 +23,7 @@ namespace GameServer.Auth
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                new Claim(ClaimTypes.NameIdentifier, userId)
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(_tokenExpirationInMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),

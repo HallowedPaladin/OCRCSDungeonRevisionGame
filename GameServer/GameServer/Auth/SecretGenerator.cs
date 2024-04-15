@@ -4,7 +4,7 @@ namespace GameServer.Auth;
 
 public class SecretGenerator
 {
-    public string GenerateSecret(int length)
+    public static string GenerateSecret(int length)
     {
         var randomByteArray = new byte[length];
         string secret = "";

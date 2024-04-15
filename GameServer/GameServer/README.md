@@ -99,8 +99,8 @@ The generated InsigniaDBContext class needs to be edited (insructions are in the
  This script needs to be run whenever the DB classes are regenerated.
 
 
-Config the project to use the DB
-================================
+Config the project to use the MySQL DB
+======================================
 #1 Edit the appsetting.json file and the match Development version.  Add the following before the closing '}' (swap in appropriate values as before).
     "ConnectionStrings": {
         "DefaultConnection": "server=<server>;port=<port>;user=<user>;password=<password>;database=<schemaname>;"
@@ -150,6 +150,9 @@ A 'ConnectedService' has been defined using this Swagger json file.  This can be
 Whenever the json is changed the Connected Service will rebuild a .cs client file in the 'obj' folder.  This folder is excluded from source control.
 The code can also be found by opening the 'OpenAPI - GameServerSwagger' in the Connected Services folder in solution explorer.  Expand the
 configuration section and scroll down to the 'View Code' button'.  Click to open the file.
+
+Program.cs has been updated to allow Swagger to take JWT tokens.  On trhe Swagger page there is 'Authorize' with a padlock icon.  This can be used to
+input a JWT token to use when a request is sent.  This means it may no longer be necessary to use the Postman testing utility (see next section).
 
 Testing Utilities
 =================

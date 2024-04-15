@@ -5,6 +5,8 @@ using GameServer.Entities;
 using GameServer.DTO;
 using GameServer.EntityHelpers;
 using System.Net.Mime;
+using NuGet.Common;
+using GameServer.Auth;
 
 namespace GameServer.Controllers
 {
@@ -17,10 +19,12 @@ namespace GameServer.Controllers
     public class AuthenticationController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
+        private readonly TokenUtility _tokenUtility;
 
-        public AuthenticationController(InsigniaDBContext context)
+        public AuthenticationController(InsigniaDBContext context, TokenUtility tokenUtility)
         {
             _context = context;
+            _tokenUtility = tokenUtility;
         }
 
         // Post: api/Authentication
@@ -35,6 +39,9 @@ namespace GameServer.Controllers
                 userDTO = userHelper.LogonUser(credentialsDTO);
                 if (userDTO.UserId != 0)
                 {
+                    // TODO need to make a singleton
+                    var token = _tokenUtility.GenerateToken(userDTO.UserId);
+                    Response.Headers.Add("Authorization", "Bearer " + token);
                     return Ok(userDTO);
                 }
                 else
