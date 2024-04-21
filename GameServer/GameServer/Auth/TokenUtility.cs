@@ -46,15 +46,9 @@ namespace GameServer.Auth
                 ValidateAudience = false
             };
 
-            try
-            {
-                var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
-                return principal;
-            }
-            catch
-            {
-                return null;
-            }
+            var principal = tokenHandler.ValidateToken(token, validationParameters, out _);
+            return principal;
+
         }
     }
 }

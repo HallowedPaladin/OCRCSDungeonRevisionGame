@@ -72,15 +72,17 @@ builder.Services.AddSingleton<TokenUtility>(new TokenUtility(jwtSecret, builder.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
  .AddJwtBearer(options =>
  {
+     var key = Convert.FromBase64String(jwtSecret);
      options.TokenValidationParameters = new TokenValidationParameters
      {
-         ValidateIssuer = true,
-         ValidateAudience = true,
-         ValidateLifetime = true,
          ValidateIssuerSigningKey = true,
-         ValidIssuer = jwtIssuer,
-         ValidAudience = jwtIssuer,
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+         IssuerSigningKey = new SymmetricSecurityKey(key),
+         ValidateIssuer = false,
+         ValidateAudience = false,
+         //ValidateLifetime = true, 
+         //ValidIssuer = jwtIssuer,
+         //ValidAudience = jwtIssuer,
+         //IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(jwtSecret))
      };
  });
 
