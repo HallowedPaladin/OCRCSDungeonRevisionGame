@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication;
 
 
 #if ApiConventions
@@ -15,6 +16,36 @@ using Microsoft.Extensions.DependencyInjection;
 #endif
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// JWT Tokens
+var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
+//var secretGenerator = new SecretGenerator();
+//var jwtSecret = SecretGenerator.GenerateSecret(builder.Configuration.GetSection("Jwt:SecretLength").Get<int>());
+//var key = Convert.FromBase64String(jwtSecret);
+var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+
+//
+//builder.Services.AddAuthentication("CustomTokenScheme")
+//    .AddScheme<AuthenticationSchemeOptions, TokenUtility>("CustomTokenScheme", options => { });
+
+// Create a singleton of the TokenUtility with a new secret key and the expiry time in minutes
+// builder.Services.AddSingleton<TokenUtility>(new TokenUtility(jwtSecret, builder.Configuration.GetSection("Jwt:ExpiryTimeInMinutes").Get<int>()));
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+ .AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = jwtIssuer,
+         ValidAudience = jwtIssuer,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+     };
+ });
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -58,33 +89,6 @@ builder.Services.AddDbContext<InsigniaDBContext>(options =>
         options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                    new MySqlServerVersion(new Version(8, 0, 36))); // Specify your MySQL server version here
     });
-
-// JWT Tokens
-
-
-var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
-var secretGenerator = new SecretGenerator();
-var jwtSecret = SecretGenerator.GenerateSecret(builder.Configuration.GetSection("Jwt:SecretLength").Get<int>());
-
-// Create a singleton of the TokenUtility with a new secret key and the expiry time in minutes
-builder.Services.AddSingleton<TokenUtility>(new TokenUtility(jwtSecret, builder.Configuration.GetSection("Jwt:ExpiryTimeInMinutes").Get<int>()));
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
- .AddJwtBearer(options =>
- {
-     var key = Convert.FromBase64String(jwtSecret);
-     options.TokenValidationParameters = new TokenValidationParameters
-     {
-         ValidateIssuerSigningKey = true,
-         IssuerSigningKey = new SymmetricSecurityKey(key),
-         ValidateIssuer = false,
-         ValidateAudience = false,
-         //ValidateLifetime = true, 
-         //ValidIssuer = jwtIssuer,
-         //ValidAudience = jwtIssuer,
-         //IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(jwtSecret))
-     };
- });
 
 // Once all the services have been added then build the app.
 var app = builder.Build();
