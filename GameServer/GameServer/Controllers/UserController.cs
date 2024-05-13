@@ -19,19 +19,20 @@ namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-#if ProducesConsumes
-    [Produces(MediaTypeNames.Application.Json)]
-    [Consumes(MediaTypeNames.Application.Json)]
-#endif
+//#if ProducesConsumes
+//    [Produces(MediaTypeNames.Application.Json)]
+//    [Consumes(MediaTypeNames.Application.Json)]
+//#endif
     public class UserController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
-        private readonly TokenUtility _tokenUtility;
+        //private readonly TokenUtility _tokenUtility;
 
-        public UserController(InsigniaDBContext context, TokenUtility tokenUtility)
+        //public UserController(InsigniaDBContext context, TokenUtility tokenUtility)
+        public UserController(InsigniaDBContext context)
         {
             _context = context;
-            _tokenUtility = tokenUtility;
+            //_tokenUtility = tokenUtility;
 
         }
 
@@ -42,15 +43,15 @@ namespace GameServer.Controllers
         {
 
             // Get the token from the request
-            string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            //string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
             // Call the token validation method
-            ClaimsPrincipal principal = _tokenUtility.ValidateToken(token);
+            //ClaimsPrincipal principal = _tokenUtility.ValidateToken(token);
 
-            if (principal == null || principal.Identity == null || !principal.Identity.IsAuthenticated)
-            {
-                return Unauthorized(); // Return 401 Unauthorized if token is invalid
-            }
+            //if (principal == null || principal.Identity == null || !principal.Identity.IsAuthenticated)
+            //{
+            //    return Unauthorized(); // Return 401 Unauthorized if token is invalid
+            //}
 
             var List = await _context.Users.Select(
             s => new UserDTO
@@ -85,15 +86,15 @@ namespace GameServer.Controllers
         public async Task<ActionResult<UserDTO>> GetUserDTO(int userId)
         {
             // Get the token from the request
-            string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            //string token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
             // Call the token validation method
-            ClaimsPrincipal principal = _tokenUtility.ValidateToken(token);
+            //ClaimsPrincipal principal = _tokenUtility.ValidateToken(token);
 
-            if (principal == null || principal.Identity == null || !principal.Identity.IsAuthenticated)
-            {
-                return Unauthorized(); // Return 401 Unauthorized if token is invalid
-            }
+            //if (principal == null || principal.Identity == null || !principal.Identity.IsAuthenticated)
+            //{
+            //    return Unauthorized(); // Return 401 Unauthorized if token is invalid
+            //}
 
             var user = await _context.Users.FindAsync(userId);
 

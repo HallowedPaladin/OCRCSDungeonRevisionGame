@@ -1,36 +1,29 @@
 ﻿using GameServer.Contexts;
 using Microsoft.EntityFrameworkCore;
-using System.Text;
-using Microsoft.AspNetCore.Mvc;
-using GameServer.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
 using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Authentication;
+using System.Text;
 
 
-#if ApiConventions
-[assembly: ApiConventionType(typeof(DefaultApiConventions))]
-#endif
+//#if ApiConventions
+//[assembly: ApiConventionType(typeof(DefaultApiConventions))]
+//#endif
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 // JWT Tokens
+// Get parameters from the app config
 var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
-//var secretGenerator = new SecretGenerator();
-//var jwtSecret = SecretGenerator.GenerateSecret(builder.Configuration.GetSection("Jwt:SecretLength").Get<int>());
-//var key = Convert.FromBase64String(jwtSecret);
-var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+var jwtSecretString = builder.Configuration.GetSection("Jwt:Secret").Get<string>();
+//var jwtSecretLength = builder.Configuration.GetSection("Jwt:SecretLength").Get<int>();
+//var expiryTimeInMinutes = builder.Configuration.GetSection("Jwt:ExpiryTimeInMinutes").Get<int>();
 
-//
-//builder.Services.AddAuthentication("CustomTokenScheme")
-//    .AddScheme<AuthenticationSchemeOptions, TokenUtility>("CustomTokenScheme", options => { });
-
+//var jwtSecretString = SecretGenerator.GenerateSecret(jwtSecretLength);
+// var secretGenerator = new SecretGenerator();
 // Create a singleton of the TokenUtility with a new secret key and the expiry time in minutes
-// builder.Services.AddSingleton<TokenUtility>(new TokenUtility(jwtSecret, builder.Configuration.GetSection("Jwt:ExpiryTimeInMinutes").Get<int>()));
+//builder.Services.AddSingleton<TokenUtility>(new TokenUtility(jwtSecretString, expiryTimeInMinutes, jwtIssuer));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
  .AddJwtBearer(options =>
@@ -43,15 +36,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
          ValidateIssuerSigningKey = true,
          ValidIssuer = jwtIssuer,
          ValidAudience = jwtIssuer,
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecretString))
      };
  });
-
-// Add services to the container.
-builder.Services.AddControllers();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
 
 // Added SwaggerGen with support for Authorisation
 builder.Services.AddSwaggerGen(
@@ -82,13 +69,19 @@ builder.Services.AddSwaggerGen(
         });
     });
 
-
 // Database
 builder.Services.AddDbContext<InsigniaDBContext>(options =>
     {
         options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
                    new MySqlServerVersion(new Version(8, 0, 36))); // Specify your MySQL server version here
     });
+
+// Add services to the container.
+builder.Services.AddControllers();
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Once all the services have been added then build the app.
 var app = builder.Build();
@@ -101,13 +94,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-// For JWT
 app.UseAuthentication();
-
 app.MapControllers();
-
 app.Run();
-
