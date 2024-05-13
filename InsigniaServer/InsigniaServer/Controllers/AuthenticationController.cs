@@ -4,8 +4,6 @@ using GameServer.Contexts;
 using GameServer.Entities;
 using GameServer.DTO;
 using GameServer.EntityHelpers;
-using System.Net.Mime;
-//using NuGet.Common;
 using GameServer.Auth;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -15,21 +13,19 @@ namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-//#if ProducesConsumes
-//    [Produces(MediaTypeNames.Application.Json)]
-//    [Consumes(MediaTypeNames.Application.Json)]
-//#endif
+    #if ProducesConsumes
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
+    #endif
     public class AuthenticationController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
         private readonly TokenUtility _tokenUtility;
         private IConfiguration _config;
 
-        //public AuthenticationController(InsigniaDBContext context, TokenUtility tokenUtility, IConfiguration config)
         public AuthenticationController(InsigniaDBContext context, IConfiguration config)
         {
             _context = context;
-           //_tokenUtility = tokenUtility;
             _config = config;
         }
 
@@ -52,7 +48,7 @@ namespace GameServer.Controllers
                     var jwtIssuer = _config["Jwt:Issuer"];
                     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecrretString));
                     var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-                    
+
 
                     var Sectoken = new JwtSecurityToken(jwtIssuer,
                       jwtIssuer,
