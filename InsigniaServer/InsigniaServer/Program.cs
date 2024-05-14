@@ -1,4 +1,5 @@
-using GameServer.Contexts;
+using InsigniaServer.Auth;
+using InsigniaServer.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -7,9 +8,21 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
 var jwtSecretString = builder.Configuration.GetSection("Jwt:Secret").Get<string>();
+var jwtSecretLength = builder.Configuration.GetSection("Jwt:SecretLength").Get<int>();
+var expiryTimeInMinutes = builder.Configuration.GetSection("Jwt:ExpiryTimeInMinutes").Get<int>();
+
+// If the secret string has not been set in the configuration then generate a random secret.
+// Using a random secret is more secure and will change the secret if the server is restarted.
+if (jwtSecretString != null || jwtSecretString.Length == 0)
+{ 
+    jwtSecretString = SecretGenerator.GenerateSecret(jwtSecretLength);
+}
+
+// Create a singleton of the TokenUtility with a new secret key and the expiry time in minutes
+builder.Services.AddSingleton<TokenUtility>(new TokenUtility(jwtSecretString, expiryTimeInMinutes, jwtIssuer));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
  .AddJwtBearer(options =>

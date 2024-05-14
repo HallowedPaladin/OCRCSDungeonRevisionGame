@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using GameServer.Entities;
+﻿using InsigniaServer.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameServer.Contexts;
+namespace InsigniaServer.Contexts;
 
 public partial class InsigniaDBContext : DbContext
 {

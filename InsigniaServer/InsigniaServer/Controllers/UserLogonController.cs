@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GameServer.Contexts;
-using GameServer.Entities;
-using System.Net.Mime;
+using InsigniaServer.Contexts;
+using InsigniaServer.Entities;
 
 namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
 #if ProducesConsumes
-    [Produces(MediaTypeNames.Application.Json)]
-    [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
 #endif
     public class UserLogonController : ControllerBase
     {
@@ -30,10 +24,10 @@ namespace GameServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserLogon>>> GetUserLogons()
         {
-          if (_context.UserLogons == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserLogons == null)
+            {
+                return NotFound();
+            }
             return await _context.UserLogons.ToListAsync();
         }
 
@@ -41,10 +35,10 @@ namespace GameServer.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserLogon>> GetUserLogon(int id)
         {
-          if (_context.UserLogons == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserLogons == null)
+            {
+                return NotFound();
+            }
             var userLogon = await _context.UserLogons.FindAsync(id);
 
             if (userLogon == null)
@@ -91,10 +85,10 @@ namespace GameServer.Controllers
         [HttpPost]
         public async Task<ActionResult<UserLogon>> PostUserLogon(UserLogon userLogon)
         {
-          if (_context.UserLogons == null)
-          {
-              return Problem("Entity set 'InsigniaDBContext.UserLogons'  is null.");
-          }
+            if (_context.UserLogons == null)
+            {
+                return Problem("Entity set 'InsigniaDBContext.UserLogons'  is null.");
+            }
             _context.UserLogons.Add(userLogon);
             try
             {

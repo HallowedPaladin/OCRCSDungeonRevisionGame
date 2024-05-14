@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 
-namespace GameServer.Entities;
+namespace InsigniaServer.Entities;
 
 public partial class UserType
 {

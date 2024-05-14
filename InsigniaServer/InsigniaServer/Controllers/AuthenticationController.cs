@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GameServer.Contexts;
-using GameServer.Entities;
-using GameServer.DTO;
-using GameServer.EntityHelpers;
-using GameServer.Auth;
+using InsigniaServer.Contexts;
+using InsigniaServer.Entities;
+using InsigniaServer.DTO;
+using InsigniaServer.EntityHelpers;
+using InsigniaServer.Auth;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -13,20 +13,21 @@ namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    #if ProducesConsumes
+#if ProducesConsumes
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
-    #endif
+#endif
     public class AuthenticationController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
         private readonly TokenUtility _tokenUtility;
         private IConfiguration _config;
 
-        public AuthenticationController(InsigniaDBContext context, IConfiguration config)
+        public AuthenticationController(InsigniaDBContext context, IConfiguration config, TokenUtility tokenUtility)
         {
             _context = context;
             _config = config;
+            _tokenUtility = tokenUtility;
         }
 
         // Post: api/Authentication
@@ -42,21 +43,21 @@ namespace GameServer.Controllers
                 if (userDTO.UserId != 0)
                 {
                     // TODO need to make a singleton
-                    //var token = _tokenUtility.GenerateToken(userDTO.UserId);
+                    var token = _tokenUtility.GenerateToken(userDTO.UserId);
 
-                    var jwtSecrretString = _config["Jwt:Secret"];
-                    var jwtIssuer = _config["Jwt:Issuer"];
-                    var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecrretString));
-                    var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                    //var jwtSecrretString = _config["Jwt:Secret"];
+                    //var jwtIssuer = _config["Jwt:Issuer"];
+                    //var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecrretString));
+                    //var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 
-                    var Sectoken = new JwtSecurityToken(jwtIssuer,
-                      jwtIssuer,
-                      null,
-                      expires: DateTime.Now.AddMinutes(120),
-                      signingCredentials: credentials);
+                    //var Sectoken = new JwtSecurityToken(jwtIssuer,
+                    //  jwtIssuer,
+                    //  null,
+                    //  expires: DateTime.Now.AddMinutes(120),
+                    //  signingCredentials: credentials);
 
-                    var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
+                    //var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
 
                     Response.Headers.Add("Authorization", "Bearer " + token);
                     return Ok(userDTO);

@@ -1,18 +1,18 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GameServer.Contexts;
-using GameServer.DTO;
-using GameServer.EntityHelpers;
+using InsigniaServer.Contexts;
+using InsigniaServer.DTO;
+using InsigniaServer.EntityHelpers;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GameServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    #if ProducesConsumes
+#if ProducesConsumes
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
-    #endif
+#endif
     public class UserController : ControllerBase
     {
         private readonly InsigniaDBContext _context;
@@ -22,10 +22,10 @@ namespace GameServer.Controllers
             _context = context;
         }
 
-        // GET: api/User/GetUsersDTO
-        [HttpGet("GetUsersDTO")]
+        // GET: api/User/GetUsers
+        [HttpGet("GetUsers")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsersDTO()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
         {
             var List = await _context.Users.Select(
             s => new UserDTO
@@ -55,9 +55,9 @@ namespace GameServer.Controllers
 
         }
 
-        // GET: api/User/GetUserDTO/5
-        [HttpGet("GetUserDTO/{userId}")]
-        public async Task<ActionResult<UserDTO>> GetUserDTO(int userId)
+        // GET: api/User/GetUser/5
+        [HttpGet("GetUser/{userId}")]
+        public async Task<ActionResult<UserDTO>> GetUser(int userId)
         {
             var user = await _context.Users.FindAsync(userId);
 
@@ -84,8 +84,8 @@ namespace GameServer.Controllers
         }
 
         // PUT: api/User/PutUserDTO/5
-        [HttpPut("PutUserDTO/{id}")]
-        public async Task<IActionResult> PutUserDTO(int id, UserDTO userDTO)
+        [HttpPut("PutUser/{id}")]
+        public async Task<IActionResult> PutUser(int id, UserDTO userDTO)
         {
             if (id != userDTO.UserId)
             {
@@ -136,16 +136,16 @@ namespace GameServer.Controllers
             return NoContent();
         }
 
-        // POST: api/User/PostUserDTO
-        [HttpPost("PostUserDTO")]
-        public async Task<ActionResult<UserDTO>> PostUserDTO(UserDTO userDTO)
+        // POST: api/User/PostUser
+        [HttpPost("PostUser")]
+        public async Task<ActionResult<UserDTO>> PostUser(UserDTO userDTO)
         {
             var userHelper = new UserHelper(_context);
 
             try
             {
                 UserDTO newUserDTO = userHelper.createUser(userDTO);
-                return CreatedAtAction(nameof(GetUserDTO), new { userId = newUserDTO.UserId }, newUserDTO);
+                return CreatedAtAction(nameof(GetUser), new { userId = newUserDTO.UserId }, newUserDTO);
             }
             catch (Exception e)
             {
@@ -154,9 +154,9 @@ namespace GameServer.Controllers
             }
         }
 
-        // DELETE: api/User/DeleteUserDTO/5
-        [HttpDelete("DeleteUserDTO/{id}")]
-        public async Task<IActionResult> DeleteUserDTO(int id)
+        // DELETE: api/User/DeleteUser/5
+        [HttpDelete("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
         {
             if (_context.Users == null)
             {

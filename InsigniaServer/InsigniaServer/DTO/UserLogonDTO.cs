@@ -1,4 +1,4 @@
-﻿namespace GameServer.DTO
+﻿namespace InsigniaServer.DTO
 {
     public class UserLogonDTO
     {

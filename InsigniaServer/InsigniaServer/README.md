@@ -10,7 +10,6 @@ In development a Swagger UI is generated to assist with testing.
 NuGet Packages 
 ==============
 Core project dependencies for API server
-- *** Microsoft.AspNetCore.OpenApi *** not available for .Net 6
 - Swashbuckle.AspNetCore v6.2.3
 Microsoft Database Entity Framework support
 - Microsoft.EntityFrameworkCore v6.0.29
@@ -37,7 +36,7 @@ Open a Terminal (command line)
 ==============================
 Right click on the root of the project in the Solution Explorer pane.
 Choose 'Open In Terminal'
-This will open a terminal in teh root of the project (same location as the .sln file)
+This will open a terminal in the root of the project (same location as the .sln file)
 
 Installing DotNet Tools
 =======================
@@ -163,3 +162,7 @@ so you can see and insert JWT tokens (amongst other things
 Postman Team Name: InsigniaWarriors
 Join the team here: https://app.getpostman.com/join-team?invite_code=dde04175431a4e9e79037a199002dcc4
 Team URL: https://insigniawarriors.postman.co/
+
+TODO
+====
+#1 The database connection properties are in appsettings.json so the root DB password is exposed.  This needs to be handled in a secret store.

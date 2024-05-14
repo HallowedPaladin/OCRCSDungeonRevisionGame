@@ -1,12 +1,12 @@
 ﻿using System;
-using GameServer.Contexts;
-using GameServer.DTO;
-using GameServer.Entities;
+using InsigniaServer.Contexts;
+using InsigniaServer.DTO;
+using InsigniaServer.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace GameServer.EntityHelpers
+namespace InsigniaServer.EntityHelpers
 {
     using BCrypt.Net;
 

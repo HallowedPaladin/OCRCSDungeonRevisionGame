@@ -1,21 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GameServer.Contexts;
-using GameServer.Entities;
-using System.Net.Mime;
+using InsigniaServer.Contexts;
+using InsigniaServer.Entities;
 
-namespace GameServer.Controllers
+namespace InsigniaServer.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
 #if ProducesConsumes
-    [Produces(MediaTypeNames.Application.Json)]
-    [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
 #endif
     public class UserTypeController : ControllerBase
     {
@@ -30,10 +24,10 @@ namespace GameServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserType>>> GetUserTypes()
         {
-          if (_context.UserTypes == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserTypes == null)
+            {
+                return NotFound();
+            }
             return await _context.UserTypes.ToListAsync();
         }
 
@@ -41,10 +35,10 @@ namespace GameServer.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserType>> GetUserType(int id)
         {
-          if (_context.UserTypes == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserTypes == null)
+            {
+                return NotFound();
+            }
             var userType = await _context.UserTypes.FindAsync(id);
 
             if (userType == null)
@@ -91,10 +85,10 @@ namespace GameServer.Controllers
         [HttpPost]
         public async Task<ActionResult<UserType>> PostUserType(UserType userType)
         {
-          if (_context.UserTypes == null)
-          {
-              return Problem("Entity set 'InsigniaDBContext.UserTypes'  is null.");
-          }
+            if (_context.UserTypes == null)
+            {
+                return Problem("Entity set 'InsigniaDBContext.UserTypes'  is null.");
+            }
             _context.UserTypes.Add(userType);
             await _context.SaveChangesAsync();
 

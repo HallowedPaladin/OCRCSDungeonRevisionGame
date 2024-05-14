@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using GameServer.Contexts;
-using GameServer.Entities;
+using InsigniaServer.Contexts;
+using InsigniaServer.Entities;
 using System.Net.Mime;
 
 namespace GameServer.Controllers
@@ -14,8 +9,8 @@ namespace GameServer.Controllers
     [Route("api/[controller]")]
     [ApiController]
 #if ProducesConsumes
-    [Produces(MediaTypeNames.Application.Json)]
-    [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)]
 #endif
     public class UserCredentialController : ControllerBase
     {
@@ -30,10 +25,10 @@ namespace GameServer.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserCredential>>> GetUserCredentials()
         {
-          if (_context.UserCredentials == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserCredentials == null)
+            {
+                return NotFound();
+            }
             return await _context.UserCredentials.ToListAsync();
         }
 
@@ -41,10 +36,10 @@ namespace GameServer.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserCredential>> GetUserCredential(int id)
         {
-          if (_context.UserCredentials == null)
-          {
-              return NotFound();
-          }
+            if (_context.UserCredentials == null)
+            {
+                return NotFound();
+            }
             var userCredential = await _context.UserCredentials.FindAsync(id);
 
             if (userCredential == null)
@@ -91,10 +86,10 @@ namespace GameServer.Controllers
         [HttpPost]
         public async Task<ActionResult<UserCredential>> PostUserCredential(UserCredential userCredential)
         {
-          if (_context.UserCredentials == null)
-          {
-              return Problem("Entity set 'InsigniaDBContext.UserCredentials'  is null.");
-          }
+            if (_context.UserCredentials == null)
+            {
+                return Problem("Entity set 'InsigniaDBContext.UserCredentials'  is null.");
+            }
             _context.UserCredentials.Add(userCredential);
             try
             {

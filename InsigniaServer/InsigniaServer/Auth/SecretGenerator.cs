@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace GameServer.Auth;
+namespace InsigniaServer.Auth;
 
 public class SecretGenerator
 {

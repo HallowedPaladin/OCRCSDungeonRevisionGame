@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 
-namespace GameServer.Entities;
+namespace InsigniaServer.Entities;
 
 public partial class SubjectTeacher
 {

@@ -1,5 +1,4 @@
-﻿using System;
-namespace GameServer.DTO
+﻿namespace InsigniaServer.DTO
 {
     public class RegistrationDTO
     {
