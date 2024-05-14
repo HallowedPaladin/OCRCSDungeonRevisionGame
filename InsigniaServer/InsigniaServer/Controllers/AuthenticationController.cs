@@ -21,12 +21,10 @@ namespace GameServer.Controllers
     {
         private readonly InsigniaDBContext _context;
         private readonly TokenUtility _tokenUtility;
-        private IConfiguration _config;
 
-        public AuthenticationController(InsigniaDBContext context, IConfiguration config, TokenUtility tokenUtility)
+        public AuthenticationController(InsigniaDBContext context, TokenUtility tokenUtility)
         {
             _context = context;
-            _config = config;
             _tokenUtility = tokenUtility;
         }
 
@@ -42,22 +40,8 @@ namespace GameServer.Controllers
                 userDTO = userHelper.LogonUser(credentialsDTO);
                 if (userDTO.UserId != 0)
                 {
-                    // TODO need to make a singleton
+                    // Generate a new JWT
                     var token = _tokenUtility.GenerateToken(userDTO.UserId);
-
-                    //var jwtSecrretString = _config["Jwt:Secret"];
-                    //var jwtIssuer = _config["Jwt:Issuer"];
-                    //var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecrretString));
-                    //var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-
-                    //var Sectoken = new JwtSecurityToken(jwtIssuer,
-                    //  jwtIssuer,
-                    //  null,
-                    //  expires: DateTime.Now.AddMinutes(120),
-                    //  signingCredentials: credentials);
-
-                    //var token = new JwtSecurityTokenHandler().WriteToken(Sectoken);
 
                     Response.Headers.Add("Authorization", "Bearer " + token);
                     return Ok(userDTO);
@@ -111,7 +95,7 @@ namespace GameServer.Controllers
         }
 
         // Post: api/Authentication
-        [HttpPost("CreatLogon")]
+        [HttpPost("CreateLogon")]
         public async Task<ActionResult<UserLogon>> CreateLogon(UserLogonDTO userLogonDTO)
         {
             var userLogon = new UserLogon();

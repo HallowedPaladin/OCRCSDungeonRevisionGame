@@ -21,7 +21,7 @@ if (jwtSecretString != null || jwtSecretString.Length == 0)
     jwtSecretString = SecretGenerator.GenerateSecret(jwtSecretLength);
 }
 
-// Create a singleton of the TokenUtility with a new secret key and the expiry time in minutes
+// Create a singleton of the TokenUtility with a new secret key, the expiry time in minutes and the issuer name.
 builder.Services.AddSingleton<TokenUtility>(new TokenUtility(jwtSecretString, expiryTimeInMinutes, jwtIssuer));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
